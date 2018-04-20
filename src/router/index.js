@@ -1,0 +1,30 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+
+
+
+
+Vue.use(Router)
+import Lhome from '../components/front/home'
+import Llogin from '../components/front/login'
+import Lregister from '../components/front/register'
+export default new Router({
+  mode:'history',
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: Lhome
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Llogin
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Lregister
+    }
+  ]
+})

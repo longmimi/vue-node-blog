@@ -1,0 +1,82 @@
+const express = require('express');
+const User = require('../models/schema/user');
+const router = express.Router();
+const moment = require('moment');
+// const objectIdToTimestamp = require('objectid-to-timestamp')
+const sha1 = require('sha1');
+const checkLogin = require('../middlewears/checkLogin').checkLogin
+const checkNotLogin = require('../middlewears/checkLogin').checkNotLogin
+
+// 注册
+const Register = (req,res) => {
+  let userRegister = new User({
+    name:req.body.name,
+    password:sha1(req.body.password) //密码加密
+  })
+
+  User.findOne({
+    name:(userRegister.name).toLowerCase()
+  })
+  .then(user => {
+    console.log(user,'user')
+    if(user){
+      res.json({
+        success:false,
+        error:'该账户已注册'
+      })
+    }else{
+      userRegister.save((err,user) => {
+        console.log('这里存储用户注册信息')
+        if(err){
+          console.log(err,'错误信息')
+          res.json(err)
+        }else{
+          console.log(user,'用户user')
+          res.json(user)
+        }
+      })
+    }
+  })
+  .catch(err => res.json(err))
+}
+
+// 登录
+const Login = (req,res) => {
+  let userLogin = new User({
+    name:req.body.name,
+    password:sha1(req.body.password) //密码加密
+  })
+
+  User.findOne({
+    name:(userLogin.name).toLowerCase()
+  })
+  .then(user => {
+    console.log(user,'user登录')
+    if(!user){
+      res.json({
+        success:false,
+        message:'账号不存在'
+      })
+    }else if(userLogin.password === user.password){
+      var name = req.body.name;
+      // 用户信息写入session
+      user.password = null;
+      req.session.user = user;
+      res.json({
+        success:true,
+        message:'登录成功',
+        name:user.name
+      })
+    }else{
+      res.json({
+        success:false,
+        message:'密码错误'
+      })
+    }
+  })
+  .catch(err => res.json(err))
+}
+module.exports = (router) =>{
+  router.post('/register',checkNotLogin,Register)
+  router.post('/login',checkNotLogin,Login)
+}
