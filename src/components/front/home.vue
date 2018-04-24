@@ -1,11 +1,11 @@
 <template>
-  <div class="home">
-    <LnewPaper></LnewPaper>
+  <div id="home" class="home">
+    我是主页
   </div>
 </template>
 
 <script>
-import LnewPaper from './newPaper.vue'
+
 export default {
   name: 'home',
   data () {
@@ -13,8 +13,7 @@ export default {
 
     }
   },
-  comments:{
-    LnewPaper
+  components:{
   }
 }
 </script>

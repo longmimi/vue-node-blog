@@ -25,7 +25,6 @@
                     <li class="markListItem" @click="previewFn" title="preview"><i class="fa fa-eye-slash" aria-hidden="true"></i></li>
                     <li class="markListItem" @click="previewAllFn" title="previewAll"><i class="fa fa-eye" aria-hidden="true"></i></li>
                 </ul>
-    
             </div>
         </div>
         <div class="mdBodyContainer" :class="{ noMenu: !navStatus }">
@@ -278,7 +277,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     /*引入reset文件*/
     
     @import "../../../assets/css/reset.scss";

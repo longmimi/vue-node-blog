@@ -5,7 +5,7 @@
           <ul>
             <li class="my-nav-head" style="color:#f5f5f5;font-size:14px;"><router-link :to="{ name: 'newPaper'}">新建</router-link></li>
             <li class="my-nav-head" style="color:#f5f5f5;font-size:14px;" v-if="this.$store.state.hasLogin === false"><router-link :to="{ name: 'login'}">登录</router-link></li>
-            <li class="my-nav-head" v-else><router-link :to="{ name: 'user'}">
+            <li class="my-nav-head" v-else>
             <el-button v-popover:popover5 type="text" style="color:#f5f5f5;font-size:14px;">{{userName}}</el-button>
               <el-popover
                 ref="popover5"
@@ -16,6 +16,7 @@
                 <div style="text-align: right; margin: 0">
                   <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
                   <el-button type="primary" size="mini" @click="loginOut">确定</el-button>
+                  <el-button type="primary" size="mini" @click="goUserCenter">个人中心</el-button>
                 </div>
               </el-popover>
             </router-link></li>
@@ -50,12 +51,17 @@ export default {
             hasLogin:false
         })  
         this.visible2 = false;
+         this.$router.push('/')
+      },
+      goUserCenter(){
+        this.$router.push('/userCenter')
+        this.visible2 = false;
       }
     }
 }
 </script>
 
-<style lang="less">
+<style lang="less" >
 body,html{
   margin:0;
   padding:0;
@@ -72,6 +78,7 @@ body,html{
     justify-content: flex-end;
     align-items: center;
     margin-right: 10px;
+    // line-height: 70px;
     .my-nav-head {
       list-style: none;
       display: inline-block;

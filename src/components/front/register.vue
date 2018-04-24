@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="my-register">
+  <div id="my-register">
       <el-card class="box-card">
        <el-row type="flex" justify="center">
          <el-col :span="12">
@@ -121,7 +121,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.my-register{
+#my-register{
   padding-top:120px;
   .box-card{
     width:70%;
