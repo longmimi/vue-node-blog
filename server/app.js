@@ -19,9 +19,9 @@ const user = require('./router/user')
 mongoose.connect('mongodb://127.0.0.1:27017/myblog',function(err){
   if(err){
     console.warn('数据库连接失败：'+err);
-}else {
-    console.log('数据库成功连接到：');
-}
+  }else {
+      console.log('数据库成功连接到：');
+  }
 })
 
 mongoose.Promise = global.Promise

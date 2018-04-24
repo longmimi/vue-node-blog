@@ -16,9 +16,6 @@
               <el-form-item label="密码" prop="password">
                 <el-input v-model="formLogin.password" type="password"></el-input>
               </el-form-item>
-              <el-form-item label="确认密码" prop="checkPassword">
-                <el-input v-model="formLogin.checkPassword" type="password"></el-input>
-              </el-form-item>
               <el-form-item>
                   <el-button type="primary" @click="login">登录</el-button>
                   <el-button @click="resetForm">取消</el-button>
@@ -37,10 +34,6 @@
 </template>
 
 <script>
-// 引入vuex /src/helper.js中的辅助函数，
-  // 将actions中的方法直接转为组件中的方法
-  import {mapActions} from 'vuex'
-
   export default {
     data(){
       let checkUserName = (rule,value,cb)=>{
@@ -87,7 +80,6 @@
       }
     },
     methods:{
-      ...mapActions(['userLogin']),
       // 向登录接口发起请求
       login(){
         let user = this.formLogin;
@@ -101,13 +93,16 @@
             // 通过验证之后才请求登录接口
             this.$http.post('/api/login',formData)
                 .then(res => {
-                    console.dir(res.data)
+                    console.dir(res.data,'登录返回数据')
                     if (res.data.success) {
-                      // this.userLogin(res.data);
                       this.$message.success(`${res.data.message}`)
                       // 登录成功 跳转至首页
-                      // this.$router.push({name:'Home'})
-                      this.$router.push('/')
+                      this.$router.push('/');
+                      sessionStorage.setItem('userName_session', res.data.name);
+                      this.$store.dispatch('showUserName',{
+                        userName:res.data.name,
+                        hasLogin:true
+                      })            
                     }else{
                       this.$message.error(`${res.data.message}`);
                       return false;
@@ -131,8 +126,12 @@
   }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .my-login{
-  padding-top: 90px;
+  padding-top: 120px;
+   .box-card{
+    width:70%;
+    margin: 0 auto;
+  }
 }
 </style>

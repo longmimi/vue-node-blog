@@ -20,8 +20,8 @@
              </el-form-item>
              <el-form-item>
                  <el-button type="primary" @click="addUser">立即注册</el-button>
-                 <el-button>取消</el-button>
-               </el-form-item>
+                 <el-button type="primary"><router-link :to="{ name: 'login'}">去登录</router-link></el-button>
+             </el-form-item>
            </el-form>
          </el-col>
        </el-row>
@@ -120,8 +120,20 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .my-register{
-  padding-top: 90px;
+  padding-top:120px;
+  .box-card{
+    width:70%;
+    margin: 0 auto;
+  }
+}
+
+a {
+    text-decoration: none;
+    color:#fff;
+}
+.router-link-active {
+    text-decoration: none;
 }
 </style>

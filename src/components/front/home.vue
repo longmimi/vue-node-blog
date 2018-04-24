@@ -1,16 +1,20 @@
 <template>
   <div class="home">
-    home
+    <LnewPaper></LnewPaper>
   </div>
 </template>
 
 <script>
+import LnewPaper from './newPaper.vue'
 export default {
   name: 'home',
   data () {
     return {
 
     }
+  },
+  comments:{
+    LnewPaper
   }
 }
 </script>

@@ -13,8 +13,8 @@ module.exports = {
     // 因此访问8080端口的资源会被定向至3000端口
     proxyTable: {
       '/api': {
-             target: 'http://localhost:3000',
-             changeOrigin: true
+          target: 'http://localhost:3000',
+          changeOrigin: true
       }
     },
 
