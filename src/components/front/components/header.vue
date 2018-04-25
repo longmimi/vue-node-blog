@@ -12,11 +12,11 @@
                 placement="top"
                 width="160"
                 v-model="visible2">
-                <p>您确定要退出吗？</p>
+                <p>清选择以下操作</p>
                 <div style="text-align: right; margin: 0">
-                  <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
-                  <el-button type="primary" size="mini" @click="loginOut">确定</el-button>
-                  <el-button type="primary" size="mini" @click="goUserCenter">个人中心</el-button>
+                  <el-button size="mini" type="text" @click="visible2 = false">点错了</el-button>
+                  <el-button type="primary" size="mini" @click="loginOut">注销</el-button>
+                  <el-button type="primary" size="mini" @click="goUserCenter" style="margin:10px auto">去个人中心</el-button>
                 </div>
               </el-popover>
             </router-link></li>

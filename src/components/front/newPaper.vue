@@ -1,14 +1,19 @@
 <template>
-    <div id="newPaper" class="newPaper" style="height:600px">
-      <Lmarkdown 
-        :mdValuesP="msg" 
-        :fullPageStatusP="false" 
-        :editStatusP="false" 
-        :previewStatusP="false"
-        :navStatusP="false"  
-        :icoStatusP="true"  
-        @childevent="childEventHandler">
-      </Lmarkdown>
+    <div id="newPaper" class="newPaper">
+      <P>请在左边写，右边即刻预览</P>
+      <div class="write-part">
+            <el-button type="primary" size="mini" @click="pushArticle" class="pushArticle-btn">发表</el-button>
+            <Lmarkdown 
+                :mdValuesP="msg" 
+                :fullPageStatusP="false" 
+                :editStatusP="false" 
+                :previewStatusP="false"
+                :navStatusP="false"  
+                :icoStatusP="true"  
+                @childevent="childEventHandler">
+            </Lmarkdown>
+      </div>
+     
     </div>
 </template>
 
@@ -24,8 +29,11 @@ export default {
      Lmarkdown
    },
    methods:{
-     childEventHandler:function(res){
+     childEventHandler(res){
         this.msg=res;
+    },
+    pushArticle(){
+        console.log(this.msg.htmlValue)
     }
   },
   mounted () {
@@ -41,7 +49,16 @@ export default {
 
 <style lang="less" scoped>
 #newPaper{
-  padding-top: 60px;
+  padding: 100px 100px 0 100px;
+  .write-part{
+      height:600px;
+        display: flex;
+        justify-content:center;
+  }
+ .pushArticle-btn{
+     margin-right: 30px;
+     height:30px;
+ }
 }
 a {
     text-decoration: none;

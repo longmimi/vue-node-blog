@@ -1,11 +1,11 @@
 <template>
   <div id="home" class="home">
-    我是主页
+    <Lbigimage></Lbigimage>
   </div>
 </template>
 
 <script>
-
+import Lbigimage from './components/bigImage'
 export default {
   name: 'home',
   data () {
@@ -14,6 +14,7 @@ export default {
     }
   },
   components:{
+    Lbigimage
   }
 }
 </script>
