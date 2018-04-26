@@ -1,8 +1,6 @@
 const express = require('express');
-const User = require('../models/schema/user');
 const router = express.Router();
-const moment = require('moment');
-// const objectIdToTimestamp = require('objectid-to-timestamp')
+const User = require('../models/schema/user');
 const sha1 = require('sha1');
 const checkLogin = require('../middlewears/checkLogin').checkLogin
 const checkNotLogin = require('../middlewears/checkLogin').checkNotLogin
@@ -42,6 +40,7 @@ const Register = (req,res) => {
 
 // 登录
 const Login = (req,res) => {
+  console.log('req.session:'+req.session)
   let userLogin = new User({
     name:req.body.name,
     password:sha1(req.body.password) //密码加密
@@ -76,7 +75,11 @@ const Login = (req,res) => {
   })
   .catch(err => res.json(err))
 }
-module.exports = (router) =>{
-  router.post('/register',checkNotLogin,Register)
-  router.post('/login',checkNotLogin,Login)
-}
+
+router.post('/api/register',checkNotLogin,Register)
+router.post('/api/login',checkNotLogin,Login)
+
+module.exports = router
+
+
+

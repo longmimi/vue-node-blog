@@ -4,18 +4,14 @@ const ObjectId = Schema.Types.ObjectId;
 const articleSchema = new Schema({
     title:String,
     author:String,
-    visit:{
-        type:Number,
-        default:0
-    },
     tags:[
         {
-            type: ObjectId,
+            type: String,
             ref:'tags'
         }
     ],
     category: {
-        type: ObjectId,
+        type: String,
         ref: 'Category' //关联Category表的_id
     },
     creatTime:{
@@ -28,9 +24,15 @@ const articleSchema = new Schema({
     contentHtml:String,
     comtentMd:String,
     comments:[{
-        comment:String,
-        date:Date
+        comment:{
+            type:String,
+            default:'暂无评论'
+        },
+        date:{
+            type:Date,
+            default:Date.now
+        }
     }]
-
-
 })
+
+module.exports = mongoose.model('myarticleSCM',articleSchema)

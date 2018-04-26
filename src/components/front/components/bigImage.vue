@@ -29,7 +29,7 @@ export default {
   padding-top: 0px;
   .imgWidth{
       width:100%;
-      height:500px;
+      height:501px;
   }
 }
 

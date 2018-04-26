@@ -93,7 +93,7 @@
             // 通过验证之后才请求登录接口
             this.$http.post('/api/login',formData)
                 .then(res => {
-                    console.dir(res.data,'登录返回数据')
+                    console.dir(res.data+'登录返回数据')
                     if (res.data.success) {
                       this.$message.success(`${res.data.message}`)
                       // 登录成功 跳转至首页

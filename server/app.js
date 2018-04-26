@@ -1,26 +1,16 @@
-const express = require('express');
+var express = require('express');
 const session = require('express-session')
-const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-// const favicon = require('serve-favicon')
-const index = require('./router/index') // localhost:3000/
-// session机制的user
-const user = require('./router/user')
+const route = require('./api/index.js')
+const app = express();
 
-// const db = mongoose.connect('mongodb://127.0.0.1:27017/test');
 
-// db.connection('error',function(error){
-//   console.log("数据库连接失败："+error);
-// })
-// db.connection("open",function(){
-//   console.log("--------数据库连接成功------")
-// });
 mongoose.connect('mongodb://127.0.0.1:27017/myblog',function(err){
   if(err){
     console.warn('数据库连接失败：'+err);
   }else {
-      console.log('数据库成功连接到：');
+      console.log('数据库成功连接!');
   }
 })
 
@@ -34,12 +24,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: true
 }))
-
-// favicon
-// app.use(favicon(__dirname + '/src/assets/favicon.ico'))
-
-// 静态资源
-app.use(express.static('dist'))
 
 // session
 app.use(session({
@@ -55,10 +39,13 @@ app.use(session({
   // })
 }))
 
+
+// 静态资源
+app.use(express.static('dist'))
+
+
 // 设定路由
-app.use('/', index)
-app.use('/api', user)
-// app.use('/api/token', usertoken)
+route(app);
 
 app.listen(port, () => {
   console.log('listen success')
