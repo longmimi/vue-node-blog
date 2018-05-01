@@ -96,6 +96,11 @@
                     console.dir(res.data+'登录返回数据')
                     if (res.data.success) {
                       this.$message.success(`${res.data.message}`)
+                      //  this.$notify({
+                      //   title: '成功',
+                      //   message: `${res.data.message}`,
+                      //   type: 'success'
+                      // });
                       // 登录成功 跳转至首页
                       this.$router.push('/');
                       sessionStorage.setItem('userName_session', res.data.name);

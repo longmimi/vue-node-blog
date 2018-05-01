@@ -26,7 +26,7 @@ const Article = (req,res) => {
             res.json({
                 status: 0,
                 msg:'恭喜发布成功！',
-                htmlValue:article.contentHtml
+                articleContent: article.articleContent
             })
         }
     })

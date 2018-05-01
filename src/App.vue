@@ -26,6 +26,6 @@ export default {
 
 <style>
 body{
-  background: #f5f5f5;
+  background:url(./assets/LbackgroundImage.png)
 }
 </style>

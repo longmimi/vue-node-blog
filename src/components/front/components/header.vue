@@ -73,7 +73,7 @@ body,html{
   height:70px;
   box-shadow: 0 1px rgba(0,0,0,0.1);
   background:#24262a;
-  z-index: 999999;
+  // z-index: 999999;
   .my-nav{
     display: flex;
     justify-content: flex-end;
