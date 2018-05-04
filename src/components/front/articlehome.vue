@@ -79,15 +79,28 @@ mounted(){
 <style scoped>
 
 .artilce-item{
+  padding:30px 50px 50px 50px;
+  display: flex;
+  /* align-items: flex-start; */
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.article-left{
+  width:60%;
+}
+.article-right{
+  width:30%;
+  border:2px solid black;
+}
 
+@media (max-width: 600px) {
+  .article-left{
+  width:100%;
 }
-.artilce-left{
-  display: inline-block;
-  width:300px;
+.article-right{
+  width:90%;
+  border:2px solid black;
 }
-.artilce-right{
-  display: inline-block;
-  width:200px;
 }
   /* 列表动画 */
   @keyframes comeIn {
@@ -109,15 +122,10 @@ mounted(){
   }
 
   .container {
-    max-width: 900px!important;
-    margin-right: auto!important;
-    margin-left: auto!important;
-    width: 90%!important;
-  }
-
-
-  .site-content {
-    padding-top: 50px;
+    /* max-width: 666px!important; */
+    /* margin-right: auto!important; */
+    /* margin-left: 4%!important; */
+    /* width: 90%!important; */
   }
 
   .post-item {
