@@ -9,6 +9,7 @@ const store = new Vuex.Store({
     state:{
         userName:'',
         hasLogin:false
+        // articleTags:[]
     },
     getters,
     actions,

@@ -22,6 +22,7 @@
                           </span>
                         </div>
                       </div>
+                      <div class="post-btn">阅读全文<i class="el-icon-d-arrow-right post-btn-word"></i></div>
                     </div>
                   </div>
                 </router-link>
@@ -31,7 +32,8 @@
       </div>
 
       <div class="article-right">
-        我是各部分排行榜
+         <Larticletags></Larticletags>
+         <Larticlecateory></Larticlecateory>
       </div>  
     </div>
 
@@ -40,6 +42,8 @@
 </template>
 
 <script>
+import Larticletags from './components/tags'
+import Larticlecateory from './components/category'
 export default {
 name: 'articlehome',
 data () {
@@ -51,7 +55,8 @@ data () {
   }
 },
 components:{
-
+  Larticletags,
+  Larticlecateory
 },
 methods: {
    getArticleList(){
@@ -90,10 +95,16 @@ mounted(){
 }
 .article-right{
   width:30%;
-  border:2px solid black;
 }
 
 @media (max-width: 600px) {
+  .artilce-item{
+    padding:30px 50px 50px 50px;
+    display: flex;
+    /* align-items: flex-start; */
+    /* justify-content: space-around; */
+    flex-direction: row-reverse;
+}
   .article-left{
   width:100%;
 }
@@ -139,6 +150,7 @@ mounted(){
     display: block;
     height: 340px;
     position: relative;
+      border-radius: 5px;
   }
 
   .post-item .info-mask {
@@ -160,6 +172,30 @@ mounted(){
   .post-item:hover .info-mask {
     background: transparent -webkit-linear-gradient(top,transparent,rgba(0,0,0,.8)) repeat scroll 0 0;
     background: transparent linear-gradient(180deg,transparent 0,rgba(0,0,0,.8)) repeat scroll 0 0;
+  }
+
+  .post-btn{
+    position:absolute;
+    bottom:10%;
+    right:10%;
+    color:#fff;
+    width:110px;
+    height:30px;
+    background: rgba(0,0,0,0.5);
+    font-size: 20px;
+    padding:10px 5px 10px 10px;
+    border-radius: 10%;
+  }
+
+  .post-btn-word{
+    padding-left:5px;
+  }
+
+  .post-btn:hover{
+    color:#fff;
+    background: rgba(0,0,0,1);
+    font-size: 20px;
+    border-radius: 10%;
   }
 
   .mask-wrapper {
