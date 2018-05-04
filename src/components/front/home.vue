@@ -1,12 +1,13 @@
 <template>
   <div id="home" class="home">
     <Lbigimage></Lbigimage>
-    <!-- <div class="home-line"></div> -->
+    <Larticlehome></Larticlehome>
   </div>
 </template>
 
 <script>
 import Lbigimage from './components/bigImage'
+import Larticlehome from './articlehome'
 export default {
   name: 'home',
   data () {
@@ -15,7 +16,8 @@ export default {
     }
   },
   components:{
-    Lbigimage
+    Lbigimage,
+    Larticlehome
   }
 }
 </script>

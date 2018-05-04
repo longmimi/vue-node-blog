@@ -95,12 +95,13 @@
                 .then(res => {
                     console.dir(res.data+'登录返回数据')
                     if (res.data.success) {
-                      this.$message.success(`${res.data.message}`)
-                      //  this.$notify({
-                      //   title: '成功',
-                      //   message: `${res.data.message}`,
-                      //   type: 'success'
-                      // });
+                      // this.$message.success(`${res.data.message}`)
+                       this.$notify({
+                        title: '成功',
+                        message: `${res.data.message}`,
+                        type: 'success',
+                        offset:130
+                      });
                       // 登录成功 跳转至首页
                       this.$router.push('/');
                       sessionStorage.setItem('userName_session', res.data.name);
@@ -109,15 +110,34 @@
                         hasLogin:true
                       })            
                     }else{
-                      this.$message.error(`${res.data.message}`);
+                      // this.$message.error(`${res.data.message}`);
+                      this.$notify({
+                      title: '失败',
+                      message: `${res.data.message}`,
+                      type: 'error',
+                      offset:130
+                    });
                       return false;
                     }
                 })
                 .catch(err => {
-                    this.$message.error(`${err.message}`, 'ERROR!')
+                    // this.$message.error(`${err.message}`, 'ERROR!')
+                    this.$notify({
+                    title: '失败',
+                    message: `${err.message}`,
+                    type: 'error',
+                    offset:130
+                  });
+                    
                 })
           } else {
-            this.$message.error('表单验证失败!')
+            // this.$message.error('表单验证失败!')
+            this.$notify({
+                  title: '失败',
+                  message: '表单验证失败',
+                  type: 'error',
+                  offset:130
+            });
             return false;
           }
         });

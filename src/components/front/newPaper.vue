@@ -9,7 +9,7 @@
     <div class="field">
       <label class="essay-title-tip label">文章标题</label>
       <div class="control">
-        <input type="text" class="essay-title input" placeholder="请输入文章标题" v-model="title" />
+        <input type="text" class="essay-title input" placeholder="请输入文章标题" v-model="articleTitle" />
       </div>
       <label class="essay-title-tip label">文章分类</label>
       <div class="control">
@@ -26,7 +26,9 @@
       <div class="control">
         <!-- 即时显示 -->
         <div class="editor-text-display" v-html="displayText"></div>
-        <textarea type="text" class="essay-content textarea textarea-custom" placeholder="请输入文章内容" v-model="content" />
+        <textarea type="text" class="essay-content textarea textarea-custom" placeholder="请输入文章内容" v-model="articleContent" 
+          rows='10' cols='30'
+        />
       </div>
     </div>
     <br>
@@ -52,10 +54,10 @@ export default {
   data() {
     return {
       displayText: '<h1>编辑内容显示在此处</h1>',
-      title:'',
+      articleTitle:'',
       inputCategory: "",
       inputTags: "",
-      content: "",
+      articleContent: "",
       picUrl:''
     };
   },
@@ -65,37 +67,69 @@ export default {
   methods: {
      pushArticle: function () {
         const _self = this;
-        if (!_self.title.length || !_self.content.length || !_self.picUrl.length) {
+        if (!_self.articleTitle.length || !_self.articleContent.length || !_self.picUrl.length ) {
           alert('请输入完整的标题、内容以及图片链接!');
-        } else if (_self.title.length > 0) {
+        } else if (_self.articleTitle.length > 0) {
             let formData = {
-              titie: _self.title,
+              title: _self.articleTitle,
               author: this.$store.state.userName,
               category: _self.inputCategory,
               tags: _self.inputTags.split("/"),
-              articleContent: _self.content,
+              articleContent: _self.articleContent,
+              picUrl:_self.picUrl,
               creatTime: new Date()
           }
            this.$http.post("api/addArticle", formData).then(res => {
             console.log("res.data", res.data);
-            this.$message(res.data.msg);
+            // this.$message(res.data.msg);
+            this.$notify({
+              title: '添加成功',
+              message: `${res.data.msg}`,
+              type: 'success',
+              offset:100
+            });
+            
             this.$router.push('/');
           });
         }
      },
      saveArticle(){
-       alert('已经存为草稿')
+        // this.$message.success('草稿保存成功！');
+        this.$notify({
+              title: '草稿保存成功！',
+              message:'草稿保存成功！',
+              type: 'success',
+              offset:100
+        });
+        sessionStorage.setItem('article_content',this.articleContent)
+        sessionStorage.setItem('article_title',this.title)
+        sessionStorage.setItem('article_category',this.category)
+        sessionStorage.setItem('article_tags',this.tags)
+        sessionStorage.setItem('article_picUrl',this.picUrl)
      }
   },
     beforeUpdate: function () {
       const _self = this;
-      _self.displayText = md.render(_self.content);
+      _self.displayText = md.render(_self.articleContent);
     },
     mounted() {
       if (this.$store.state.hasLogin === false) {
         this.$message("登录之后才可以写博客哦");
+         this.$notify({
+              title: '登录之后才可以写博客哦',
+              message:'登录之后才可以写博客哦',
+              type: 'warning',
+              offset:100
+        });
         this.$router.push("/");
       } else {
+        if(sessionStorage.getItem('articleCache')){
+          this.articleContent = sessionStorage.getItem('article_content')
+          this.title = sessionStorage.getItem('article_title')
+          this.category = sessionStorage.getItem('article_category')
+          this.tags = sessionStorage.getItem('article_tags')
+          this.picUrl = sessionStorage.getItem('article_picUrl')
+        }
       }
     }
   };

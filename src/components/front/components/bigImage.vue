@@ -3,7 +3,7 @@
           <!-- swiper -->
       <swiper :options="swiperOption">
           <div class="parallax-bg" slot="parallax-bg" data-swiper-parallax="-23%"></div>
-          <swiper-slide class="bannerImage" v-for='(item,index) in imgListArr' :key="index" :style="{background:' url('+item.src+') ',backgroundSize:'cover'}">
+          <swiper-slide class="bannerImage" v-for='(item,index) in imgListArr' :key="index" :style="{background:`url(${item.src})`,backgroundSize:'cover'}">
             <div class="title" data-swiper-parallax="-100">{{item.title}}</div>
             <br>
             <div class="subtitle" data-swiper-parallax="-200">{{item.author}}</div>

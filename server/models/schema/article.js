@@ -21,8 +21,11 @@ const articleSchema = new Schema({
         type:Date,
         default:Date.now
     },
-    contentHtml:String,
-    comtentMd:String,
+    articleContent:String,
+    picUrl:{
+        type:String,
+        default:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525334463703&di=75babb628e78a4b363afde7cf1cf36da&imgtype=0&src=http%3A%2F%2Fimg.9ku.com%2Fgeshoutuji%2Fsingertuji%2F3%2F39125%2F39125_1.jpg'
+    },
     comments:[{
         comment:{
             type:String,

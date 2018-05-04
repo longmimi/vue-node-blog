@@ -8,9 +8,9 @@ const Article = (req,res) => {
         author:req.body.author,
         category:req.body.category,
         tags:req.body.tags,
-        contentHtml:req.body.contentHtml,
-        comtentMd:req.body.comtentMd,
-        creatTime:req.body.creatTime
+        articleContent: req.body.articleContent,
+        creatTime:req.body.creatTime,
+        picUrl: req.body.picUrl
     })
     console.log(req.body)
     userArticle.save((err,article) => {
@@ -26,7 +26,7 @@ const Article = (req,res) => {
             res.json({
                 status: 0,
                 msg:'恭喜发布成功！',
-                articleContent: article.articleContent
+                articleId: article._id
             })
         }
     })

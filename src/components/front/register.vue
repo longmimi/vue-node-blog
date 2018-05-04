@@ -97,17 +97,36 @@ export default {
               return false;
             }
             else{
-              this.$message.success('恭喜您注册成功！')
+              // this.$message.success('恭喜您注册成功！')
+              this.$notify({
+                      title: '成功',
+                      message: '恭喜您注册成功！',
+                      type: 'success',
+                      offset:130
+              });
               console.log('跳转到登录页')
               this.$router.push('/login')
             }
           })
           .catch(err => {
-            this.$message.error(`${err.message}`)
+            // this.$message.error(`${err.message}`)
+             this.$notify({
+                      title: '成功',
+                      message:`${err.message}`,
+                      type: 'error',
+                      offset:130
+              });
+            
           })
         }
         else {
-            this.$message.error('表单验证失败!')
+            // this.$message.error('表单验证失败!')
+             this.$notify({
+                      title: '失败',
+                      message: '表单验证失败',
+                      type: 'error',
+                      offset:130
+              });
             return false;
           }
       })
