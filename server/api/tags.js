@@ -5,7 +5,7 @@ const router = express.Router();
 const ArticleTags = (req,res) => {
    console.log('req',req);
    let whatFind = {},
-     articleTags = ['tags'];
+       articleTags = ['tags'];
   ArticleSCM.find(whatFind, articleTags).exec((err,docs) => {
      if(err){
        console.log('err',err)

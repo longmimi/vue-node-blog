@@ -143,14 +143,14 @@ mounted(){
     position: relative;
     margin-bottom: 30px;
     background-color: #fff;
-    box-shadow: 10px 10px 14px #888888;
+    box-shadow: 6px 6px 14px #888888;
   }
 
   .post-image {
     display: block;
     height: 340px;
     position: relative;
-      border-radius: 5px;
+    border-radius: 5px;
   }
 
   .post-item .info-mask {

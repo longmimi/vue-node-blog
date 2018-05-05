@@ -4,10 +4,7 @@
        <div class="tags-nav">
          <i class='el-icon-star-off'>标签</i>
        </div>
-        <!-- <ul v-for='(tagArr,key) in articletags' :key="key" class="tags-ul">
-          <li v-for="(tag,tagkey) in tagArr.tags" :key="tagkey" class="tags-li">{{tag}}</li>
-        </ul> -->
-        <li v-for="(tagItem,key) in articletags" :key="key" class="tags-li">{{tagItem.tags}}({{tagItem.tagCount}})</li>
+        <li v-for="(tagItem,key) in articletags" :key="key" class="tags-li" @click="getArticleTagsList(tagItem)">{{tagItem.tags}}({{tagItem.tagCount}})</li>
      </div>
     
   </div>
@@ -43,6 +40,14 @@ export default {
           console.log('get err',err)
         }
       )
+      },
+      //点击标签获取该标签的文章
+      getArticleTagsList(tagItem){
+        this.$http.get('api/getarticletaglist',{params:{key:tagItem.tags}})
+        .then(res => {
+          console.log('getarticletaglist',res.data)
+        })
+
       },
       //二维数组变一维
       arr2To1(arr){
@@ -99,12 +104,7 @@ export default {
 }
 </script>
 
-<style lang="less" >
-body,html{
-  margin:0;
-  padding:0;
-  border:0;
-}
+<style lang="less" scoped>
 li,ul{
   list-style: none;
   display: inline-block;
@@ -117,7 +117,7 @@ li::after{
 #articleTags{
   .tags-container{
     min-width:300px;
-    .tags-ul,.tags-li{
+    .tags-li{
       cursor: pointer;
     }
     .tags-li:hover{
@@ -125,5 +125,4 @@ li::after{
     }
   }
 }
-
 </style>

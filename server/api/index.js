@@ -3,11 +3,13 @@ const article = require('./article.js');
 const articlehome = require('./articlehome.js');
 const articletags = require('./tags.js');
 const articlecategory = require('./category.js');
+const articletagsList = require('./tagsarticle.js');
 
 module.exports = (app) => {
-    app.use(user);
-    app.use(article);
-    app.use(articlehome);
-    app.use(articletags);
-    app.use(articlecategory);
+    app.use(user);  //登录注册
+    app.use(article); //新建文章
+    app.use(articlehome); //首页获取文章
+    app.use(articletags); //首页获取文章标签
+    app.use(articlecategory); //首页获取文章分类
+    app.use(articletagsList); //首页标签相关文章列表
 }
