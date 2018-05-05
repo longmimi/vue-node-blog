@@ -4,9 +4,10 @@
        <div class="tags-nav">
          <i class='el-icon-star-off'>标签</i>
        </div>
-        <ul v-for='(tagArr,key) in articletags' :key="key" class="tags-ul">
+        <!-- <ul v-for='(tagArr,key) in articletags' :key="key" class="tags-ul">
           <li v-for="(tag,tagkey) in tagArr.tags" :key="tagkey" class="tags-li">{{tag}}</li>
-        </ul>
+        </ul> -->
+        <li v-for="(tagItem,key) in articletags" :key="key" class="tags-li">{{tagItem.tags}}({{tagItem.tagCount}})</li>
      </div>
     
   </div>
@@ -16,7 +17,8 @@
 export default {
     data() {
       return {
-        articletags:''
+        articletags:'',
+        articleTagsArr:[]
       }
     },
     mounted:function(){
@@ -33,15 +35,67 @@ export default {
            console.log('getarticletags',res);
            if(res.data.status == 0){
               console.log('res',res.data.articletags);
-              this.articletags = res.data.articletags;
+              this.articleTagsArr = res.data.articletags;                    
+              this.articletags = this.uniqeByKeys(this.tagsAddCount(this.arr2To1( this.articleTagsArr)),['tags'])
            }
          })
          .catch( err => {
           console.log('get err',err)
         }
       )
-      }
+      },
+      //二维数组变一维
+      arr2To1(arr){
+        let newArr = [];
+        for(let i=0;i<arr.length;i++){
+          for(let j=0;j<arr[i].tags.length;j++){
+            newArr.push(arr[i].tags[j])
+          }
+        }  
+        return newArr
+      },
+      //标签的各项去重，并加上每项的个数
+      tagsAddCount(arr){
+         let newArticleArr =[],
+             dealedArr = [];
+         for(let i=0;i<arr.length;i++){
+          var tagCount=0;
+          let itemObj= {};
+          itemObj.tagCount = 0;
+          for(let j=i;j<arr.length;j++){
+            if(arr[i] === arr[j]){        
+              itemObj.tags = arr[i];
+              itemObj.tagCount++;
+            }
+          }
+          newArticleArr.push(itemObj)
+        }
+        return newArticleArr;
+      },
+      //将对象元素转换成字符串以作比较  
+      obj2key(obj, keys){  
+          var n = keys.length,  
+              key = [];  
+          while(n--){  
+              key.push(obj[keys[n]]);  
+          }  
+          return key.join('|');  
+      },
+      //去重操作  
+      uniqeByKeys(array,keys){  
+          var arr = [];  
+          var hash = {};  
+          for (var i = 0, j = array.length; i < j; i++) {  
+              var k = this.obj2key(array[i], keys);  
+              if (!(k in hash)) {  
+                  hash[k] = true;  
+                  arr.push(array[i]);  
+              }  
+          }  
+          return arr ;  
+      } 
     }
+   
 }
 </script>
 
