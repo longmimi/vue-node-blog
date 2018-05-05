@@ -59,7 +59,7 @@ export default {
          let newArticleArr =[],
              dealedArr = [];
          for(let i=0;i<arr.length;i++){
-          var tagCount=0;
+          // var tagCount=0;
           let itemObj= {};
           itemObj.tagCount = 0;
           for(let j=i;j<arr.length;j++){
@@ -99,13 +99,12 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" >
 body,html{
   margin:0;
   padding:0;
   border:0;
 }
-
 li,ul{
   list-style: none;
   display: inline-block;
