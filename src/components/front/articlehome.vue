@@ -34,7 +34,7 @@
                   </div>
                   <div class="post-bottom-info">
                     <h3 class="post-info-title">{{ article.title }}</h3>
-                    <p class="post-info-content">{{ article.articleContent }}</p>
+                    <p class="post-info-content">{{ article.articleContent | articleContentFilter}}</p>
                   </div>
                 </router-link>
               </article>
@@ -92,7 +92,14 @@ mounted(){
 filters:{
   TagsFilter(value){
     return value.join(',')
-  }
+  },
+   articleContentFilter(value){
+     if(value.length > 100){
+       value = value.substr(0,100)
+     }
+     return value;
+   }
+  
 }
 }
 </script>
@@ -164,7 +171,7 @@ a{
     position: relative;
     margin-bottom: 30px;
     background-color: #fff;
-    box-shadow: 6px 6px 14px #888888;
+    box-shadow: 0px 0px 20px #888888;
   }
 
   .post-image {
@@ -180,6 +187,7 @@ a{
   .post-info-title,.post-info-content{
     padding:5px 20px 5px 15px;
     text-decoration: none;
+    margin:2px;
   }
  
   .post-icon{

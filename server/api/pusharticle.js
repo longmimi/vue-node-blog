@@ -1,3 +1,4 @@
+//  首页推荐文章的接口 暂时搁置
 const express = require('express');
 const ArticleSCM = require('../models/schema/article');
 const router = express.Router();
