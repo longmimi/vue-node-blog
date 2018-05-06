@@ -4,6 +4,7 @@ const articlehome = require('./articlehome.js');
 const articletags = require('./tags.js');
 const articlecategory = require('./category.js');
 const articletagsList = require('./tagsarticle.js');
+const articletagsListById = require('./tagarticlelistbyid.js');
 
 module.exports = (app) => {
     app.use(user);  //登录注册
@@ -11,5 +12,6 @@ module.exports = (app) => {
     app.use(articlehome); //首页获取文章
     app.use(articletags); //首页获取文章标签
     app.use(articlecategory); //首页获取文章分类
-    app.use(articletagsList); //首页标签相关文章列表
+    app.use(articletagsList); //首页标签相关文章查询
+    app.use(articletagsListById); //首页标签相关文章根据ID查询
 }

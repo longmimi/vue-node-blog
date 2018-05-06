@@ -2,9 +2,16 @@
   <div id='articleTags'>
      <div class="tags-container">
        <div class="tags-nav">
-         <i class='el-icon-star-off'>标签</i>
+         <i class='el-icon-star-off'><span>文章标签</span></i>
        </div>
-        <li v-for="(tagItem,key) in articletags" :key="key" class="tags-li" @click="getArticleTagsList(tagItem)">{{tagItem.tags}}({{tagItem.tagCount}})</li>
+          <!-- <router-link :to="{name:'tagarticlelist',query:{tagArticleId:this.tagListArr,tagName:this.tagName}}"> -->
+            <li v-for="(tagItem,key) in articletags" 
+                :key="key" 
+                class="tags-li"
+                @click="getArticleTagsList(tagItem)">
+                {{tagItem.tags}}({{tagItem.tagCount}})
+            </li>
+          <!-- </router-link> -->
      </div>
     
   </div>
@@ -15,7 +22,10 @@ export default {
     data() {
       return {
         articletags:'',
-        articleTagsArr:[]
+        articleTagsArr:[],
+        queryTagMsg:'',
+        tagName:'',
+        tagListArr:[]
       }
     },
     mounted:function(){
@@ -43,9 +53,24 @@ export default {
       },
       //点击标签获取该标签的文章
       getArticleTagsList(tagItem){
+        let _self = this;
         this.$http.get('api/getarticletaglist',{params:{key:tagItem.tags}})
         .then(res => {
-          console.log('getarticletaglist',res.data)
+          if(res.data.status == 0){
+             console.log('getarticletaglist',res.data.articletagslist)
+             _self.tagName = tagItem.tags;
+             let tagList = res.data.articletagslist,
+                 tagListArrTemp = [];
+             tagList.forEach( (item,index) => {
+                tagListArrTemp.push(item._id)
+             })
+            _self.tagListArr = tagListArrTemp;
+          }
+          this.$router.push({ name:'tagarticlelist',
+                              query:{
+                                 tagArticleId:this.tagListArr,
+                                 tagName:this.tagName
+                            }})
         })
 
       },
@@ -117,11 +142,23 @@ li::after{
 #articleTags{
   .tags-container{
     min-width:300px;
+    margin-bottom:20px;
     .tags-li{
       cursor: pointer;
+      padding-top:10px;
     }
     .tags-li:hover{
       text-decoration: underline;
+    }
+    .tags-nav{
+      border-bottom:1px solid #ccc;
+      padding-bottom:10px;
+      span{
+        font-size: 20px;
+        font-style: italic;
+        display: inline-block;
+        margin-left:10px;
+      }
     }
   }
 }

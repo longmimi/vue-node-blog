@@ -1,7 +1,7 @@
 <template>
 <div id="articleDetailPage">
    <h1>我是文章详情页</h1>
-   {{$route.params}}
+   {{$route.query}}
 
 
 

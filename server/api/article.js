@@ -22,7 +22,7 @@ const Article = (req,res) => {
                 msg:'发布失败'
             })
         }else{
-            console.log(article,'存储成功-----成功信息')
+            // console.log(article,'存储成功-----成功信息')
             res.json({
                 status: 0,
                 msg:'恭喜发布成功！',

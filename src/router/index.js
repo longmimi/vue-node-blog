@@ -8,6 +8,7 @@ import Lregister from '@/components/front/register'
 import LnewPaper from '@/components/front/newPaper'
 import LuserCenter from '@/components/front/userCenter'
 import Larticledetail from '@/components/front/articledetail'
+import LarticleTagsList from '@/components/front/tagarticlelist'
 export default new Router({
   mode:'history',
   routes: [
@@ -58,6 +59,14 @@ export default new Router({
         title: '登录'
       },
       component: Larticledetail
+    },
+    {
+      path:'/tasarticlelist',
+      name:'tagarticlelist',
+      meta:{
+        title:'标签文章'
+      },
+      component: LarticleTagsList
     }
   ]
 })

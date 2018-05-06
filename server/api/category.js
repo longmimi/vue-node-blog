@@ -10,7 +10,7 @@ const ArticleCategory = (req, res) => {
     if (err) {
       console.log('err', err)
     } else {
-      console.log('分类的docs', docs);
+      // console.log('分类的docs', docs);
       res.json({
         status: 0,
         msg: '查询分类成功',

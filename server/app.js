@@ -10,7 +10,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/myblog',function(err){
   if(err){
     console.warn('数据库连接失败：'+err);
   }else {
-      console.log('数据库成功连接!');
+    console.log('数据库成功连接!');
   }
 })
 

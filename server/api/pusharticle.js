@@ -10,7 +10,7 @@ const ArticlePush = (req, res) => {
     if (err) {
       console.log('err', err)
     } else {
-      console.log('推荐的docs', docs);
+      // console.log('推荐的docs', docs);
       res.json({
         status: 0,
         msg: '成功',

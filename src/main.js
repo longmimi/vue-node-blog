@@ -17,7 +17,7 @@ Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
   // window.document.title = to.mata.title;
-  console.log(window.document.titlee)
+  // console.log(window.document.titlee)
   next();
 })
 

@@ -2,7 +2,7 @@
   <div id='articleCategory'>
     <div class="category-container">
        <div class="category-nav">
-         <i class='el-icon-menu'>分类</i>
+         <i class='el-icon-menu'><span>文章分类</span></i>
        </div>
         <!-- <ul v-for='(tagArr,key) in articletags' :key="key" class="tags-ul">
           <li v-for="(tag,tagkey) in tagArr.tags" :key="tagkey" class="tags-li">{{tag}}</li>
@@ -108,9 +108,19 @@ li::after{
   }
   .tags-li{
       cursor: pointer;
+      padding-top:10px;
     }
   .tags-li:hover{
     text-decoration: underline;
+  }
+  .category-nav{
+      border-bottom:1px solid #ccc;
+      padding-bottom:10px;
+      span{font-size: 20px;
+        font-style: italic;
+        // display: inline-block;
+        margin-left:10px;
+      }
   }
 }
 

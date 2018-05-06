@@ -9,7 +9,7 @@ const ArticleHome = (req, res) => {
       if(err){
         console.log('查询出错',err)
       }else{
-        console.log('查询的docs',docs)
+        // console.log('查询的docs',docs)
         res.json({
           status: 0,
           msg:'成功',

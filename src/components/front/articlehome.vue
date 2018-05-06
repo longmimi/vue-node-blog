@@ -15,8 +15,15 @@
                   <div class="post-image" :style="{ backgroundImage: `url(${ article.picUrl })`,  backgroundSize: 'cover', backgroundPosition: '50%' }">
                     <div class="info-mask">
                       <div class="mask-wrapper">
-                        <h3 class="post-title">{{ article.title }}</h3>
-                        <h5 class="post-title">{{ article.author }}</h5>
+                        <!-- <h3 class="post-title">{{ article.title }}</h3> -->
+                        <p class="post-title">
+                          <img src="../../assets/user.png" alt="" class="post-icon">
+                          {{ article.author }}
+                          <img src="../../assets/tag.png" alt="" class="post-icon">
+                          {{ article.tags | TagsFilter}}
+                          <img src="../../assets/category.png" alt="" class="post-icon">
+                          {{ article.category }}
+                        </p>
                         <div class="post-info">
                           <span class="post-time">{{new Date(article.creatTime).toUTCString()}}
                           </span>
@@ -24,6 +31,10 @@
                       </div>
                       <div class="post-btn">阅读全文<i class="el-icon-d-arrow-right post-btn-word"></i></div>
                     </div>
+                  </div>
+                  <div class="post-bottom-info">
+                    <h3 class="post-info-title">{{ article.title }}</h3>
+                    <p class="post-info-content">{{ article.articleContent }}</p>
                   </div>
                 </router-link>
               </article>
@@ -77,12 +88,22 @@ methods: {
 },
 mounted(){
    this.getArticleList();   //获取文章列表
+},
+filters:{
+  TagsFilter(value){
+    return value.join(',')
+  }
 }
 }
 </script>
 
 <style scoped>
-
+.router-link-active {
+    text-decoration: none;
+}
+a{
+  text-decoration: none;
+}
 .artilce-item{
   padding:30px 50px 50px 50px;
   display: flex;
@@ -152,6 +173,20 @@ mounted(){
     position: relative;
     border-radius: 5px;
   }
+  .post-bottom-info{
+    display: block;
+    background:#fff;
+  }
+  .post-info-title,.post-info-content{
+    padding:5px 20px 5px 15px;
+    text-decoration: none;
+  }
+ 
+  .post-icon{
+    width:25px;
+    height:25px;
+    margin-bottom:-5px;
+  }
 
   .post-item .info-mask {
     position: absolute;
@@ -184,7 +219,7 @@ mounted(){
     background: rgba(0,0,0,0.5);
     font-size: 20px;
     padding:10px 5px 10px 10px;
-    border-radius: 10%;
+    border-radius: 10px;
   }
 
   .post-btn-word{
@@ -195,7 +230,6 @@ mounted(){
     color:#fff;
     background: rgba(0,0,0,1);
     font-size: 20px;
-    border-radius: 10%;
   }
 
   .mask-wrapper {

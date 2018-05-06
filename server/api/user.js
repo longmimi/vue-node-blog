@@ -16,7 +16,7 @@ const Register = (req,res) => {
     name:(userRegister.name).toLowerCase()
   })
   .then(user => {
-    console.log(user,'user')
+    // console.log(user,'user')
     if(user){
       res.json({
         success:false,
@@ -29,7 +29,7 @@ const Register = (req,res) => {
           console.log(err,'错误信息')
           res.json(err)
         }else{
-          console.log(user,'用户user')
+          // console.log(user,'用户user')
           res.json(user)
         }
       })
@@ -40,7 +40,7 @@ const Register = (req,res) => {
 
 // 登录
 const Login = (req,res) => {
-  console.log('req.session:'+req.session)
+  // console.log('req.session:'+req.session)
   let userLogin = new User({
     name:req.body.name,
     password:sha1(req.body.password) //密码加密
@@ -50,7 +50,7 @@ const Login = (req,res) => {
     name:(userLogin.name).toLowerCase()
   })
   .then(user => {
-    console.log(user,'user登录')
+    // console.log(user,'user登录')
     if(!user){
       res.json({
         success:false,
