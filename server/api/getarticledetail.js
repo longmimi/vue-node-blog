@@ -11,7 +11,7 @@ const getArticleDetail = (req,res) => {
       res.json({
         status: 0,
         msg: '查询文章成功',
-        articletags: docs
+        articledetail: docs
       })  
     }
   })

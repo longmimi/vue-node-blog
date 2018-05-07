@@ -10,7 +10,8 @@ const Article = (req,res) => {
         tags:req.body.tags,
         articleContent: req.body.articleContent,
         creatTime:req.body.creatTime,
-        picUrl: req.body.picUrl
+        picUrl: req.body.picUrl,
+        visit: 0
     })
     console.log(req.body)
     userArticle.save((err,article) => {

@@ -11,11 +11,11 @@ const articleSchema = new Schema({
         }
     ],
     category: {
-        type: String,
-        ref: 'Category' //关联Category表的_id
+            type: String,
+            ref: 'Category' //关联Category表的_id
     },
     creatTime:{
-        type:Date
+            type:Date
     },
     lastEditTime:{
         type:Date,
@@ -35,7 +35,11 @@ const articleSchema = new Schema({
             type:Date,
             default:Date.now
         }
-    }]
+    }],
+    visit:{
+        type:Number,
+        default: 0
+    }
 })
 
 module.exports = mongoose.model('myarticleSCM',articleSchema)

@@ -11,7 +11,7 @@
                 v-for="(article, key) in articleObj"
                 :key="key"
               >
-                <router-link :to="{name:'articledetail',params: {id: article._id},query:{articleId: article._id}}">
+               
                   <div class="post-image" :style="{ backgroundImage: `url(${ article.picUrl })`,  backgroundSize: 'cover', backgroundPosition: '50%' }">
                     <div class="info-mask">
                       <div class="mask-wrapper">
@@ -26,17 +26,24 @@
                         </p>
                         <div class="post-info">
                           <span class="post-time">{{new Date(article.creatTime).toUTCString()}}
+                            <img src="../../assets/visit.png" alt="" class="post-icon-visit" >
+                            {{ article.visit }}
+                            <img src="../../assets/comment.png" alt="" class="post-icon-visit" >
+                            {{ article.comments | commentFilter}}
+
                           </span>
                         </div>
                       </div>
-                      <div class="post-btn">阅读全文<i class="el-icon-d-arrow-right post-btn-word"></i></div>
+                      <router-link :to="{name:'articledetail',params: {id: article._id},query:{articleId: article._id}}">
+                        <div class="post-btn">阅读全文<i class="el-icon-d-arrow-right post-btn-word"></i></div>
+                      </router-link>
                     </div>
                   </div>
                   <div class="post-bottom-info">
                     <h3 class="post-info-title">{{ article.title }}</h3>
                     <p class="post-info-content">{{ article.articleContent | articleContentFilter}}</p>
                   </div>
-                </router-link>
+                
               </article>
           </div>
         </div>
@@ -98,6 +105,9 @@ filters:{
        value = value.substr(0,100)
      }
      return value;
+   },
+   commentFilter(value){
+     return value.length
    }
   
 }
@@ -195,6 +205,13 @@ a{
     height:25px;
     margin-bottom:-5px;
   }
+  .post-icon-visit{
+    width:15px;
+    height:15px;
+    margin-left:10px;
+    margin-bottom:-2px;
+
+  }
 
   .post-item .info-mask {
     position: absolute;
@@ -228,6 +245,8 @@ a{
     font-size: 20px;
     padding:10px 5px 10px 10px;
     border-radius: 10px;
+    line-height: 30px;
+    text-align: center;
   }
 
   .post-btn-word{
@@ -237,7 +256,7 @@ a{
   .post-btn:hover{
     color:#fff;
     background: rgba(0,0,0,1);
-    font-size: 20px;
+    font-size: 15px;
   }
 
   .mask-wrapper {
