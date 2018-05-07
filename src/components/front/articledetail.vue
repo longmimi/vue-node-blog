@@ -3,23 +3,39 @@
    <div class="article-image" :style="{ backgroundImage: `url(${ articleItem.picUrl })`,  backgroundSize: 'cover', backgroundPosition: '50%' }">
       <p class="article-title">{{articleItem.title}}</p>
    </div>
+   <p v-html="displayArticleText"></p>
 </div>  
 </template>
 <script>
+const hljs = require('highlight.js');
+const md = require('markdown-it')({
+    html:         true,
+    highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return '<pre class="hljs"><code>' +
+               hljs.highlight(lang, str, true).value +
+               '</code></pre>';
+      } catch (__) {}
+    }
+    return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+  }
+});
 export default{
   data(){
     return {
       articleId:this.$route.query.articleId,
-      articleItem:''
+      articleItem:'',
+      displayArticleText:''
     }
   },
   mounted(){
     //调用访问加一接口
     this.addVisit(this.articleId);
-
   },
   methods: {
     getArticleDetail(id){
+      let _self = this;
       this.$http.get('api/getArticleDetail',{
         params:{
           articleId:id
@@ -27,7 +43,8 @@ export default{
       })
       .then( res => {
         console.log('获取文章详情的res',res.data)
-        this.articleItem = res.data.articledetail;
+        _self.articleItem = res.data.articledetail;
+        _self.displayArticleText = md.render(_self.articleItem.articleContent);
       })
     },
     addVisit(id){

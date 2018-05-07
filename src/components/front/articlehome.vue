@@ -256,7 +256,7 @@ a{
   .post-btn:hover{
     color:#fff;
     background: rgba(0,0,0,1);
-    font-size: 15px;
+    font-size: 18px;
   }
 
   .mask-wrapper {
