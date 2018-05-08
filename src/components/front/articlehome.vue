@@ -10,9 +10,8 @@
                 class="post-item"
                 v-for="(article, key) in articleObj"
                 :key="key"
-              >
-               
-                  <div class="post-image" :style="{ backgroundImage: `url(${ article.picUrl })`,  backgroundSize: 'cover', backgroundPosition: '50%' }">
+              >  
+                  <div class="post-image" :style="{ backgroundImage: `url(${ article.picUrl })`, backgroundSize:'contain', backgroundPosition: 'center' ,backgroundRepeat: 'no-repeat'}">
                     <div class="info-mask">
                       <div class="mask-wrapper">
                         <!-- <h3 class="post-title">{{ article.title }}</h3> -->
@@ -26,10 +25,15 @@
                         </p>
                         <div class="post-info">
                           <span class="post-time">{{new Date(article.creatTime).toUTCString()}}
-                            <img src="../../assets/visit.png" alt="" class="post-icon-visit" >
-                            {{ article.visit }}
-                            <img src="../../assets/comment.png" alt="" class="post-icon-visit" >
-                            {{ article.comments | commentFilter}}
+                            <span :title="`浏览量为 ${article.visit}`">
+                              <img src="../../assets/visit.png" alt="" class="post-icon-visit" >
+                              {{ article.visit }}
+                            </span>
+                            <span :title="`评论数为 ${article.comments | commentFilter}`">
+                              <img src="../../assets/comment.png" alt="" class="post-icon-visit" >
+                              {{ article.comments | commentFilter}}
+                            </span>
+                           
 
                           </span>
                         </div>
@@ -124,14 +128,19 @@ a{
 .artilce-item{
   padding:30px 50px 50px 50px;
   display: flex;
-  /* align-items: flex-start; */
   justify-content: space-around;
   flex-wrap: wrap;
 }
 .article-left{
+  /* position: absolute;
+  top:70%;
+  left:5%; */
   width:60%;
 }
 .article-right{
+  /* position:fixed;
+  top:70%;
+  right:5%; */
   width:30%;
 }
 
@@ -188,7 +197,7 @@ a{
     display: block;
     height: 340px;
     position: relative;
-    border-radius: 5px;
+    border-radius: 10px;
   }
   .post-bottom-info{
     display: block;

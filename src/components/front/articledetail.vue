@@ -1,9 +1,12 @@
 <template>
 <div id="articleDetailPage">
-   <div class="article-image" :style="{ backgroundImage: `url(${ articleItem.picUrl })`,  backgroundSize: 'cover', backgroundPosition: '50%' }">
+   <div class="article-image" :style="{ backgroundImage: `url(${ articleItem.picUrl })`,backgroundSize:'cover', backgroundPosition: 'center' ,backgroundRepeat: 'no-repeat' }">
       <p class="article-title">{{articleItem.title}}</p>
    </div>
-   <p v-html="displayArticleText"></p>
+   <div class="article-container">
+      <p v-html="displayArticleText"></p>
+   </div>
+   
 </div>  
 </template>
 <script>
@@ -78,19 +81,43 @@ export default{
   padding-top:60px;
   .article-image{
     width:100%;
-    height:300px;
+    height:350px;
     .article-title{
-      text-align: center;
-      font-size: 40px;
+      position: absolute;
+      z-index:30;
+      left:50%;
+      transform: translateX(-50%);
+      font-size: 50px;
       margin:0;
       line-height: 300px;
       font-style: longtean;
-      color:#000;
+      color:#fff;
     }
     .article-title:hover{
-      transform: scale(1.2);
       cursor: pointer;
     }
+  }
+  .article-image::before{
+    position: absolute;
+    top:70px;
+    left:0;
+    width:100%;
+    height:340px;
+    content:'';
+    background: rgba(0,0,0,0.5);
+    z-index:1;
+  }
+  .article-container{
+    position: absolute;
+    z-index:20;
+    width:60%;
+    left:50%;
+    top:52%;
+    transform: translateX(-50%);
+    padding:10px 20px 10px 20px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px #888888;
   }
 }
 
