@@ -97,6 +97,11 @@ methods: {
       )
    }
 },
+computed: {
+   commentFilter(value){
+     return value.length
+   }
+},
 mounted(){
    this.getArticleList();   //获取文章列表
 },
@@ -113,7 +118,6 @@ filters:{
    commentFilter(value){
      return value.length
    }
-  
 }
 }
 </script>

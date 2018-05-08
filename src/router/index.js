@@ -61,7 +61,7 @@ export default new Router({
       component: Larticledetail
     },
     {
-      path:'/tasarticlelist',
+      path:'/tagarticlelist',
       name:'tagarticlelist',
       meta:{
         title:'标签文章'

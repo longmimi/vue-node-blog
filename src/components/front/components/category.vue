@@ -7,7 +7,11 @@
         <!-- <ul v-for='(tagArr,key) in articletags' :key="key" class="tags-ul">
           <li v-for="(tag,tagkey) in tagArr.tags" :key="tagkey" class="tags-li">{{tag}}</li>
         </ul> -->
-        <li v-for="(category,key) in newCategoryArr" :key="key" class="tags-li">{{category.category}}({{category.categoryCount}})</li>
+        <li v-for="(category,key) in newCategoryArr" 
+            :key="key" class="tags-li"
+            @click="getArticleCategoryList(category.category)">
+            {{category.category}}({{category.categoryCount}})
+        </li>
      </div>
   </div>
 </template>
@@ -18,6 +22,7 @@ export default {
       return {
         articlecategory:'',
         newCategoryArr:[]
+
       }
     },
     mounted:function(){
@@ -42,6 +47,29 @@ export default {
           console.log('get err',err)
         }
       )
+      },
+      //点击分类获取该分类对应的文章
+      getArticleCategoryList(category){
+        let _self = this;
+        this.$http.get('api/getarticlecategorylist',{params:{key:category}})
+        .then(res => {
+          if(res.data.status == 0){
+             console.log('getarticlecategorylist',res.data.articlecategorylist[0].category)
+             this.$router.push({ name:'tagarticlelist',
+                              query:{
+                                 cateArticleId:res.data.articlecategorylist[0]._id,
+                                 cateName:res.data.articlecategorylist[0].category
+                            }})
+          }else{
+            this.$notify({
+                    title: '失败',
+                    message: '请重试',
+                    type: 'error',
+                    offset:110
+                  });
+          }
+          
+        })
       },
       //处理拿到的数组，添加重复个数
       categoryAddCount(arr){
@@ -103,6 +131,9 @@ li::after{
   content: '、';
 }
 #articleCategory{
+  background: #fff;
+  box-shadow: 0px 0px 10px #888888;
+  padding:5px 10px;
   .category-container{
     min-width:300px;
   }
@@ -116,9 +147,10 @@ li::after{
   .category-nav{
       border-bottom:1px solid #ccc;
       padding-bottom:10px;
-      span{font-size: 20px;
+      span{
+        font-size: 20px;
         font-style: italic;
-        // display: inline-block;
+        display: inline-block;
         margin-left:10px;
       }
   }

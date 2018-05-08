@@ -140,6 +140,9 @@ li::after{
   content: '、';
 }
 #articleTags{
+  background: #fff;
+  box-shadow: 0px 0px 10px #888888;
+  padding:5px 10px;
   .tags-container{
     min-width:300px;
     margin-bottom:20px;
@@ -151,6 +154,7 @@ li::after{
       text-decoration: underline;
     }
     .tags-nav{
+      height:22px;
       border-bottom:1px solid #ccc;
       padding-bottom:10px;
       span{
@@ -158,6 +162,7 @@ li::after{
         font-style: italic;
         display: inline-block;
         margin-left:10px;
+        line-height: 20px;
       }
     }
   }
