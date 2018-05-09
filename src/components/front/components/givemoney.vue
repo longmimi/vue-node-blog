@@ -2,6 +2,7 @@
   <div id='givemoney'>
     <div class="dsbtn"  :class="{dsbtn:givemoneyimg,btnmove:isbtnmove}">
        <img src="../../../assets/givemoney.png" @click='btnclick' :class="{imgsize:issize,imgsize2:isimgsize2}"/>
+       <p class="dsp">打赏</p>
        <img src='../../../assets/2code.png' :class="{codesize:iscodeshow}" />
     </div>
   </div>
@@ -51,6 +52,11 @@ export default {
     .imgsize{
       width:60px;
       height:60px;
+      margin-left:10px;
+    }
+    .imgsize:hover{
+      transform: scale(1.2);
+     
     }
     .imgsize2{
       width:0;
@@ -61,9 +67,25 @@ export default {
       height:60px;
       display: none;
     }
+    .dsp{
+      display: none;
+      width:50px;
+      height:20px;
+      margin:0 auto;
+      background: rgba(0,0,0,0.1);
+      text-align: center;
+      line-height:20px;
+      padding:5px;
+    }
   }
   .dsbtn:hover{
-    transform: scale(1.2);
+  .dsp{
+        display: block;
+        width:50px;
+        height:20px;
+        margin:0 auto;
+      }
+   
   }
   .btnmove{
     animation: givemoney 2s;

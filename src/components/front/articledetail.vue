@@ -5,7 +5,7 @@
    </div>
    <div class="article-container">
       <p v-html="displayArticleText" class="displayArticleText"></p>
-      <div class="displayArticleText-word"><p>我是有底线的~</p></div>
+      <div class="displayArticleText-word"><p>我是有底线的</p></div>
       <Lgivemoney class="givemoney"></Lgivemoney>
    </div>
    
@@ -91,6 +91,8 @@ export default{
     height:350px;
     .article-title{
       position: absolute;
+      width:100%;
+      text-align: center;
       z-index:30;
       left:50%;
       transform: translateX(-50%);

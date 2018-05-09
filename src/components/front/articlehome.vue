@@ -53,7 +53,7 @@
         </div>
       </div>
 
-      <div class="article-right">
+      <div :class="{articleright:isFlow,articlerightfixed:isFixed}" ref="tagCate">
          <Larticletags></Larticletags>
          <Larticlecateory></Larticlecateory>
       </div>  
@@ -73,7 +73,10 @@ data () {
       scrollListen: false,
       articleObj: [],    //文章内容
       totalPages: "", // 总页数
-      currentPage: 1  // 记录当前点击页码
+      currentPage: 1, // 记录当前点击页码
+      isFixed: false,
+      isFlow:true
+
   }
 },
 components:{
@@ -95,6 +98,24 @@ methods: {
           console.log('get err',err)
         }
       )
+   },
+   handleScroll(){
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      let offsetTop = this.$refs.tagCate.offsetTop 
+      console.log(scrollTop)
+      console.log('滑动的距离'+scrollTop+'距离顶部的距离'+offsetTop)
+        if (scrollTop + 80 > offsetTop) {
+          this.isFixed = true
+          // this.isFlow = false
+          if(scrollTop < 360){
+          this.isFixed = false
+        }
+        }
+         else {
+          
+          this.isFixed = false
+          // this.isFlow = true 
+        }
    }
 },
 computed: {
@@ -104,6 +125,7 @@ computed: {
 },
 mounted(){
    this.getArticleList();   //获取文章列表
+   window.addEventListener('scroll', this.handleScroll)
 },
 filters:{
   TagsFilter(value){
@@ -118,6 +140,9 @@ filters:{
    commentFilter(value){
      return value.length
    }
+},
+destroyed () {
+  window.removeEventListener('scroll', this.handleScroll)
 }
 }
 </script>
@@ -131,37 +156,42 @@ a{
 }
 .artilce-item{
   padding:30px 50px 50px 50px;
-  display: flex;
+  /* display: flex;
   justify-content: space-around;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
 }
 .article-left{
-  /* position: absolute;
+  position: absolute;
   top:70%;
-  left:5%; */
-  width:60%;
+  left:8%;
+  width:55%;
 }
-.article-right{
-  /* position:fixed;
+.articleright{
+  position:absolute;
   top:70%;
-  right:5%; */
-  width:30%;
+  right:8%;
+  width:25%;
+}
+.articlerightfixed{
+  position:fixed;
+  top:81px;
+  right:8%;
+  width:25%;
 }
 
 @media (max-width: 600px) {
   .artilce-item{
     padding:30px 50px 50px 50px;
     display: flex;
-    /* align-items: flex-start; */
-    /* justify-content: space-around; */
-    flex-direction: row-reverse;
+    justify-content: space-around;
+    flex-wrap: wrap; 
 }
   .article-left{
-  width:120%;
-}
-.article-right{
-  width:110%;
-}
+      width:60%;
+  }
+  .article-right{
+      width:30%;
+  }
 }
   /* 列表动画 */
   @keyframes comeIn {

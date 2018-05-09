@@ -135,7 +135,7 @@ li::after{
   box-shadow: 0px 0px 10px #888888;
   padding:5px 10px;
   .category-container{
-    min-width:300px;
+    // min-width:300px;
   }
   .tags-li{
       cursor: pointer;

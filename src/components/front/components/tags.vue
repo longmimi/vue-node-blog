@@ -4,14 +4,14 @@
        <div class="tags-nav">
          <i class='el-icon-star-off'><span>文章标签</span></i>
        </div>
-          <!-- <router-link :to="{name:'tagarticlelist',query:{tagArticleId:this.tagListArr,tagName:this.tagName}}"> -->
+       <div class="tag-li">
             <li v-for="(tagItem,key) in articletags" 
                 :key="key" 
                 class="tags-li"
                 @click="getArticleTagsList(tagItem)">
                 {{tagItem.tags}}({{tagItem.tagCount}})
             </li>
-          <!-- </router-link> -->
+        </div>
      </div>
     
   </div>
@@ -145,15 +145,18 @@ li::after{
   padding:5px 10px;
   margin-bottom:30px;
   .tags-container{
-    min-width:300px;
     margin-bottom:20px;
-    .tags-li{
-      cursor: pointer;
-      padding-top:10px;
+    .tag-li{
+      word-break:break-all;
+      .tags-li{
+        cursor: pointer;
+        padding-top:10px;
+      }
+      .tags-li:hover{
+        text-decoration: underline;
+      }
     }
-    .tags-li:hover{
-      text-decoration: underline;
-    }
+   
     .tags-nav{
       height:22px;
       border-bottom:1px solid #ccc;
