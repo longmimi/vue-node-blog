@@ -157,11 +157,10 @@ a{
     flex-direction: row-reverse;
 }
   .article-left{
-  width:100%;
+  width:120%;
 }
 .article-right{
-  width:90%;
-  border:2px solid black;
+  width:110%;
 }
 }
   /* 列表动画 */

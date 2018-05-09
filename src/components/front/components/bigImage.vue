@@ -73,6 +73,22 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@media (max-width: 600px) {
+  .bannerImage{
+    width:100%;
+    height:330px;
+    color:#fff;
+    .title{
+      font-size: 35px;
+    }
+    .subtitle{
+      font-size:25px; 
+    }
+    .text{
+      font-size: 20px;
+    }
+  }
+}
 #bigImage{
   text-align: center;
   margin:-20px 40px 0 40px;

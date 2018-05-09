@@ -4,12 +4,16 @@
       <p class="article-title">{{articleItem.title}}</p>
    </div>
    <div class="article-container">
-      <p v-html="displayArticleText"></p>
+      <p v-html="displayArticleText" class="displayArticleText"></p>
+      <div class="displayArticleText-word"><p>我是有底线的~</p></div>
+      <Lgivemoney class="givemoney"></Lgivemoney>
    </div>
+   
    
 </div>  
 </template>
 <script>
+import Lgivemoney from './components/givemoney'
 const hljs = require('highlight.js');
 const md = require('markdown-it')({
     html:         true,
@@ -35,6 +39,9 @@ export default{
   mounted(){
     //调用访问加一接口
     this.addVisit(this.articleId);
+  },
+  components:{
+    Lgivemoney
   },
   methods: {
     getArticleDetail(id){
@@ -108,6 +115,7 @@ export default{
     z-index:1;
   }
   .article-container{
+    overflow: hidden;
     position: absolute;
     z-index:20;
     width:60%;
@@ -118,6 +126,29 @@ export default{
     background: #fff;
     border-radius: 15px;
     box-shadow: 0px 0px 10px #888888;
+    margin-bottom:100px;
+    .displayArticleText{
+      margin-bottom:50px;
+    }
+    .displayArticleText-word{
+       width:100%;
+       height:1px;
+       background: #ccc;
+       margin:30px 0px;
+       position: relative;
+       p{
+         position: absolute;
+         top:-28px;
+         left:50%;
+         transform: translateX(-50%);
+         background: #fff;
+         padding:0 7px;
+       }
+      }
+  }
+  .givemoney{
+    margin:20px 0;
+    cursor: pointer;
   }
 }
 

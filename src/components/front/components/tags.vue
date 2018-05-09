@@ -143,6 +143,7 @@ li::after{
   background: #fff;
   box-shadow: 0px 0px 10px #888888;
   padding:5px 10px;
+  margin-bottom:30px;
   .tags-container{
     min-width:300px;
     margin-bottom:20px;
