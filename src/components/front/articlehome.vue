@@ -46,11 +46,20 @@
                   <div class="post-bottom-info">
                     <p class="post-info-title">{{ article.title }}</p>
                     <p class="post-info-content" v-html="checkContent(article.articleContent)"></p>
-                  </div>
-                
+                  </div>           
               </article>
           </div>
         </div>
+        <!-- 分页 -->
+        <el-pagination
+          class="mypagination"
+          background
+          layout="prev, pager, next"
+          :total="totalItem"
+          :page-size='5'
+          @current-change="handleCurrentChange">
+        </el-pagination>
+        <!-- 分页 -->
       </div>
 
       <div :class="{articleright:isFlow,articlerightfixed:isFixed}" ref="tagCate">
@@ -92,8 +101,8 @@ data () {
       totalPages: "", // 总页数
       currentPage: 1, // 记录当前点击页码
       isFixed: false,
-      isFlow:true
-
+      isFlow:true,
+      totalItem: 0 //总博客个数
   }
 },
 components:{
@@ -109,6 +118,7 @@ methods: {
         if(res.data.status == 0){
           console.log('res',res.data.articlehome);
           this.articleObj = res.data.articlehome;
+          this.totalItem = res.data.totalNumber;
         }
       })
       .catch( err => {
@@ -134,6 +144,21 @@ methods: {
    checkContent(value){
      let _articleContent = md.render(value)
      return _articleContent.length > 100 ? _articleContent.substr(0,80) + '......' : _articleContent;
+   },
+   handleCurrentChange(val){
+      console.log(val);
+      this.$http.get('api/getpagination',{
+        params:{
+          pageNumber:val
+        }
+      })
+      .then( res => {
+        console.log(res.data.status,'res.data.status')
+        console.log(res.data.pagination,'res.data.pagination')
+        this.articleObj = res.data.pagination;
+
+      })
+
    }
 },
 computed: {
@@ -198,6 +223,12 @@ a{
   top:81px;
   right:8%;
   width:25%;
+}
+
+.mypagination{
+  display: block;
+  width:64%;
+  margin:30px auto;
 }
 
 @media (max-width: 600px) {

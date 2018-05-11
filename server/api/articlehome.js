@@ -10,14 +10,21 @@ const ArticleHome = (req, res) => {
         console.log('查询出错',err)
       }else{
         // console.log('查询的docs',docs)
-        res.json({
-          status: 0,
-          msg:'成功',
-          articlehome: docs
-        })
+          ArticleSCM.count({}, function(err, total){
+          if (err) {
+              console.log("Error:" + err);
+          }
+          else {
+              res.json({
+                status: 0,
+                msg:'成功',
+                totalNumber:total,
+                articlehome: docs
+              })
+          }
+        })    
       }
     })
-    
 }
 
 router.get('/api/getarticlehome', ArticleHome)

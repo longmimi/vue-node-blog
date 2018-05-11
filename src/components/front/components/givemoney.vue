@@ -35,7 +35,7 @@ export default {
            this.iscodeshow = false;
            this.isimgsize2 = true;
          }, 0);
-       }, 2000);
+       }, 1000);
      }
     }
 }
@@ -88,7 +88,7 @@ export default {
    
   }
   .btnmove{
-    animation: givemoney 2s;
+    animation: givemoney 1s;
   }
   @keyframes givemoney {
     from {
