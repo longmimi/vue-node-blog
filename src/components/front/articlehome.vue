@@ -11,7 +11,7 @@
                 v-for="(article, key) in articleObj"
                 :key="key"
               >  
-                  <div class="post-image" :style="{ backgroundImage: `url(${ article.picUrl })`, backgroundSize:'contain', backgroundPosition: 'center' ,backgroundRepeat: 'no-repeat'}">
+                  <div class="post-image" :style="{ backgroundImage: `url(${ article.picUrl })`, backgroundSize:'cover', backgroundPosition: 'center' ,backgroundRepeat: 'no-repeat'}">
                     <div class="info-mask">
                       <div class="mask-wrapper">
                         <!-- <h3 class="post-title">{{ article.title }}</h3> -->
@@ -24,7 +24,7 @@
                           {{ article.category }}
                         </p>
                         <div class="post-info">
-                          <span class="post-time">{{new Date(article.creatTime).toUTCString()}}
+                          <span class="post-time">{{new Date(article.creatTime).toLocaleString()}}
                             <span :title="`浏览量为 ${article.visit}`">
                               <img src="../../assets/visit.png" alt="" class="post-icon-visit" >
                               {{ article.visit }}
@@ -156,9 +156,25 @@ methods: {
         console.log(res.data.status,'res.data.status')
         console.log(res.data.pagination,'res.data.pagination')
         this.articleObj = res.data.pagination;
-
+        this.scrollToTop(2000)
       })
 
+   },
+   scrollToTop(scrollDuration){
+     const scrollHeight = window.scrollY,
+              scrollStep = Math.PI / ( scrollDuration / 15 ),
+              cosParameter = scrollHeight / 2;
+        let scrollCount = 0,
+            scrollMargin,
+            scrollInterval = setInterval(function () {
+              if ( window.scrollY != 0 ) {
+                scrollCount = scrollCount + 1;  
+                scrollMargin = cosParameter - cosParameter * Math.cos( scrollCount * scrollStep );
+                window.scrollTo( 0, ( scrollHeight - scrollMargin ) );
+              } else {
+                clearInterval(scrollInterval);
+              }
+            }, 1);
    }
 },
 computed: {
@@ -227,8 +243,8 @@ a{
 
 .mypagination{
   display: block;
-  width:64%;
-  margin:30px auto;
+  width:34%;
+  margin:50px auto;
 }
 
 @media (max-width: 600px) {
@@ -276,17 +292,19 @@ a{
     margin-bottom: 30px;
     background-color: #fff;
     box-shadow: 0px 0px 20px #888888;
+    border-radius: 10px;
   }
 
   .post-image {
     display: block;
     height: 340px;
     position: relative;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
   }
   .post-bottom-info{
     display: block;
     background:#fff;
+    border-radius: 0 0 10px 10px;
   }
   .post-info-title{
     padding:5px 20px 5px 15px;
@@ -339,13 +357,13 @@ a{
   .post-btn{
     position:absolute;
     bottom:10%;
-    right:10%;
+    right:8%;
     color:#fff;
     width:110px;
     height:30px;
     background: rgba(0,0,0,0.5);
     font-size: 20px;
-    padding:10px 5px 10px 10px;
+    padding:5px 5px 5px 10px;
     border-radius: 10px;
     line-height: 30px;
     text-align: center;

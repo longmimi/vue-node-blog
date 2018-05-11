@@ -19,7 +19,7 @@ const articleSchema = new Schema({
     },
     lastEditTime:{
         type:Date,
-        default:Date.now
+        default:Date.now()
     },
     articleContent:String,
     picUrl:{
@@ -33,7 +33,7 @@ const articleSchema = new Schema({
         },
         date:{
             type:Date,
-            default:Date.now
+            default:Date.now()
         }
     }],
     visit:{

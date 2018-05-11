@@ -2,6 +2,8 @@
 <div id="articleDetailPage">
    <div class="article-image" :style="{ backgroundImage: `url(${ articleItem.picUrl })`,backgroundSize:'cover', backgroundPosition: 'center' ,backgroundRepeat: 'no-repeat' }">
       <p class="article-title">{{articleItem.title}}</p>
+      <p class="article-time">{{articleItem.author}} 最后发布于 · {{articleItem.lastEditTime | timeToLocalStringFilter}} 已被浏览 {{articleItem.visit}} 次</p>
+      <!-- <p class="article-time" v-if="">最后修改于 · {{articleItem.lastEditTime | timeToLocalStringFilter}}</p> -->
    </div>
    <div class="manageArticle" v-if="isSelf">
      <div @click="editarticle()" class="manageBtn">编辑文章</div>
@@ -110,8 +112,6 @@ export default{
                              articleId:this.articleId
                            }   
                           });
-
-
       }else{
         
       }
@@ -146,6 +146,11 @@ export default{
           }) 
       }
     }
+  },
+  filters:{
+    timeToLocalStringFilter(time){
+      return new Date(time).toLocaleString()
+    }
   }
 }
   
@@ -172,6 +177,23 @@ export default{
       line-height: 300px;
       font-style: longtean;
       color:#fff;
+    }
+    .article-time{
+      position: absolute;
+      width:100%;
+      text-align: center;
+      z-index:30;
+      left:50%;
+      top:17%;
+      transform: translateX(-50%);
+      font-size: 15px;
+      margin:0;
+      line-height: 300px;
+      font-style: longtean;
+      color:#fff;
+      white-space:normal;
+      word-break:break-all;
+      word-wrap:break-word;
     }
     .article-title:hover{
       cursor: pointer;
@@ -267,8 +289,9 @@ export default{
   .article-container{
     overflow: hidden;
     position: absolute;
+    left:50%;
     z-index:20;
-    width:90%;
+    width:91%;
     // left:50%;
     // top:52%;
     // transform: translateX(-50%);

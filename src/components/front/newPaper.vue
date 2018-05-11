@@ -164,7 +164,7 @@ export default {
           this.inputCategory = sessionStorage.getItem('article_category')
           this.inputTags = sessionStorage.getItem('article_tags')
           this.picUrl = sessionStorage.getItem('article_picUrl')
-        }else if(sessionStorage.getItem('article_content_edit')){
+        }else if(sessionStorage.getItem('article_content_edit') && this.isEditArticle == 'yes'){
            //设置缓存
           this.articleContent = sessionStorage.getItem('article_content_edit')
           this.articleTitle = sessionStorage.getItem('article_title_edit')
