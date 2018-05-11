@@ -2,8 +2,8 @@
   <div id='givemoney'>
     <div class="dsbtn"  :class="{dsbtn:givemoneyimg,btnmove:isbtnmove}">
        <img src="../../../assets/givemoney.png" @click='btnclick' :class="{imgsize:issize,imgsize2:isimgsize2}"/>
-       <p class="dsp">打赏</p>
-       <img src='../../../assets/2code.png' :class="{codesize:iscodeshow}" />
+       <p class="dsp"  @click='btnclick'>打赏</p>
+       <img src='../../../assets/pay.jpg' :class="{codesize:iscodeshow}"/>
     </div>
   </div>
 </template>
@@ -63,8 +63,8 @@ export default {
       height:0;
     }
     .codesize{
-      width:60px;
-      height:60px;
+      width:100px;
+      height:100px;
       display: none;
     }
     .dsp{

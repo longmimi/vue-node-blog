@@ -24,7 +24,7 @@ const Register = (req,res) => {
       })
     }else{
       userRegister.save((err,user) => {
-        console.log('这里存储用户注册信息')
+        // console.log('这里存储用户注册信息')
         if(err){
           console.log(err,'错误信息')
           res.json(err)

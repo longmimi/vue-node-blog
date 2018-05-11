@@ -7,7 +7,7 @@ const getArticleDetail = (req,res) => {
     if(err){
       console.log('err',err)
     }else{
-      console.log('getArticleDetail的docs', docs);
+      // console.log('getArticleDetail的docs', docs);
       res.json({
         status: 0,
         msg: '查询文章成功',

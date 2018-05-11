@@ -10,7 +10,7 @@ const ArticleTags = (req,res) => {
      if(err){
        console.log('err',err)
      }else{
-       console.log('tags的docs',docs);
+      //  console.log('tags的docs',docs);
        res.json({
          status:0,
          msg:'查询标签成功',

@@ -13,7 +13,7 @@ const ArticleTagsByTagName = (req, res) => {
     if (err) {
       console.log('按照 tagname 这个条件查找的数据', err)
     } else {
-      console.log('按照 tagname 这个条件查找的数据', docs);
+      // console.log('按照 tagname 这个条件查找的数据', docs);
       res.json({
         status: 0,
         msg: '查询 --api/getarticlelistbytagname--成功',
@@ -31,7 +31,7 @@ const ArticleTagsByCategoryName = (req, res) => {
     if (err) {
       console.log('按照 catename 这个条件查找的数据', err)
     } else {
-      console.log('按照 catename 这个条件查找的数据', docs);
+      // console.log('按照 catename 这个条件查找的数据', docs);
       res.json({
         status: 0,
         msg: '查询 --api/getarticlelistbycatename--成功',

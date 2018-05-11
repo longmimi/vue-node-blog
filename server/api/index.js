@@ -11,7 +11,7 @@ const addvisitconut = require('./addvisit.js');
 
 module.exports = (app) => {
     app.use(user);  //登录注册
-    app.use(article); //新建文章
+    app.use(article); //操作文章
     app.use(articlehome); //首页获取文章
     app.use(articletags); //首页获取文章标签
     app.use(articlecategory); //首页获取文章分类

@@ -11,11 +11,11 @@ const articleSchema = new Schema({
         }
     ],
     category: {
-            type: String,
-            ref: 'Category' //关联Category表的_id
+        type: String,
+        ref: 'Category' //关联Category表的_id
     },
     creatTime:{
-            type:Date
+        type: Date
     },
     lastEditTime:{
         type:Date,

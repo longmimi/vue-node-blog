@@ -36,7 +36,7 @@ const AddVisit = (req, res) => {
           msg:'查找文章失败'
       })
     } else {
-      console.log('按照_id这个条件查找的数据', docs);
+      // console.log('按照_id这个条件查找的数据', docs);
       res.json({
           status:0,
           msg:'访客+1成功',

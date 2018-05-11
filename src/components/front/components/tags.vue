@@ -5,12 +5,16 @@
          <i class='el-icon-star-off'><span>文章标签</span></i>
        </div>
        <div class="tag-li">
-            <li v-for="(tagItem,key) in articletags" 
+          <el-badge v-for="(tagItem,key) in articletags"
+                   :value='tagItem.tagCount' :key="key" class="item tags-li">
+              <el-button size="small"  @click="getArticleTagsList(tagItem)">{{tagItem.tags}}</el-button>
+          </el-badge>
+            <!-- <li v-for="(tagItem,key) in articletags" 
                 :key="key" 
                 class="tags-li"
                 @click="getArticleTagsList(tagItem)">
                 {{tagItem.tags}}({{tagItem.tagCount}})
-            </li>
+            </li> -->
         </div>
      </div>
     
@@ -136,9 +140,10 @@ li,ul{
   padding:3px;
   margin:0;
 }
-li::after{
-  content: '、';
-}
+// li::after{
+//   content: '、';
+// }
+
 #articleTags{
   background: #fff;
   box-shadow: 0px 0px 10px #888888;
@@ -148,9 +153,11 @@ li::after{
     margin-bottom:20px;
     .tag-li{
       word-break:break-all;
+      margin-top:10px;
+      
       .tags-li{
         cursor: pointer;
-        padding-top:10px;
+        margin:1px 10px 10px 1px;
       }
       .tags-li:hover{
         text-decoration: underline;

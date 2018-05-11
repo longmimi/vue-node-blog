@@ -49,8 +49,11 @@
 <script>
 // import Lmarkdown from "./components/markdown.vue";
 const hljs = require('highlight.js');
+import 'highlight.js/styles/googlecode.css' //样式文件
 const md = require('markdown-it')({
     html:         true,
+    linkify: true,
+    typographer: true,
     highlight: function (str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
@@ -62,11 +65,6 @@ const md = require('markdown-it')({
     return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
   }
 });
-// import MarkdownIt from 'markdown-it';
-// import  hljs  from 'highlight.js';
-// const md = new MarkdownIt()({
-   
-// });
 export default {
   data() {
     return {
@@ -75,7 +73,9 @@ export default {
       inputCategory: "",
       inputTags: "",
       articleContent: "",
-      picUrl:''
+      picUrl:'',
+      isEditArticle:this.$route.query.isEditArticle,
+      editArticleId:this.$route.query.articleId
     };
   },
   components: {
@@ -87,27 +87,45 @@ export default {
         if (!_self.articleTitle.length || !_self.articleContent.length || !_self.picUrl.length ) {
           alert('请输入完整的标题、内容以及图片链接!');
         } else if (_self.articleTitle.length > 0) {
-            let formData = {
-              title: _self.articleTitle,
-              author: this.$store.state.userName,
-              category: _self.inputCategory,
-              tags: _self.inputTags.split("/"),
-              articleContent: _self.articleContent,
-              picUrl:_self.picUrl,
-              creatTime: new Date()
-          }
-           this.$http.post("api/addArticle", formData).then(res => {
-            console.log("res.data", res.data);
-            // this.$message(res.data.msg);
-            this.$notify({
-              title: '添加成功',
-              message: `${res.data.msg}`,
-              type: 'success',
-              offset:100
-            });
-            
-            this.$router.push('/');
-          });
+            if(this.isEditArticle == 'yes'){
+                 let newArticle = {
+                      title: _self.articleTitle,
+                      category: _self.inputCategory,
+                      tags: _self.inputTags.split("/"),
+                      articleContent: _self.articleContent,
+                      picUrl:_self.picUrl,
+                      creatTime: new Date(),
+                      editId:_self.editArticleId
+                }
+                this.$http.post('api/updateArticle',newArticle)
+                .then( res => {
+                    console.log("update返回的数据",res)
+                })
+                this.$router.push('/');
+            }else{
+                let formData = {
+                  title: _self.articleTitle,
+                  author: this.$store.state.userName,
+                  category: _self.inputCategory,
+                  tags: _self.inputTags.split("/"),
+                  articleContent: _self.articleContent,
+                  picUrl:_self.picUrl,
+                  creatTime: new Date()
+                }
+                this.$http.post("api/addArticle", formData).then(res => {
+                  console.log("res.data", res.data);
+                  // this.$message(res.data.msg);
+                  this.$notify({
+                    title: '添加成功',
+                    message: `${res.data.msg}`,
+                    type: 'success',
+                    offset:100
+                  });
+                  
+                  this.$router.push('/');
+                });
+            }
+           
         }
      },
      saveArticle(){
@@ -119,9 +137,9 @@ export default {
               offset:100
         });
         sessionStorage.setItem('article_content',this.articleContent)
-        sessionStorage.setItem('article_title',this.title)
-        sessionStorage.setItem('article_category',this.category)
-        sessionStorage.setItem('article_tags',this.tags)
+        sessionStorage.setItem('article_title',this.articleTitle)
+        sessionStorage.setItem('article_category',this.inputCategory)
+        sessionStorage.setItem('article_tags',this.inputTags.split("/"))
         sessionStorage.setItem('article_picUrl',this.picUrl)
      }
   },
@@ -140,12 +158,19 @@ export default {
         });
         this.$router.push("/");
       } else {
-        if(sessionStorage.getItem('articleCache')){
+        if(sessionStorage.getItem('article_content')){
           this.articleContent = sessionStorage.getItem('article_content')
-          this.title = sessionStorage.getItem('article_title')
-          this.category = sessionStorage.getItem('article_category')
-          this.tags = sessionStorage.getItem('article_tags')
+          this.articleTitle = sessionStorage.getItem('article_title')
+          this.inputCategory = sessionStorage.getItem('article_category')
+          this.inputTags = sessionStorage.getItem('article_tags')
           this.picUrl = sessionStorage.getItem('article_picUrl')
+        }else if(sessionStorage.getItem('article_content_edit')){
+           //设置缓存
+          this.articleContent = sessionStorage.getItem('article_content_edit')
+          this.articleTitle = sessionStorage.getItem('article_title_edit')
+          this.inputCategory = sessionStorage.getItem('article_category_edit')
+          this.inputTags = sessionStorage.getItem('article_tags_edit')
+          this.picUrl = sessionStorage.getItem('article_picUrl_edit')
         }
       }
     }

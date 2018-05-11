@@ -25,7 +25,14 @@ export default {
 </script>
 
 <style>
+
 body{
   background:url(./assets/LbackgroundImage.png)
+}
+img{
+  width:100%;
+}
+.el-badge__content{
+      background-color: rgb(93, 105, 106);
 }
 </style>

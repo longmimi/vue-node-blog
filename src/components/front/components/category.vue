@@ -7,11 +7,15 @@
         <!-- <ul v-for='(tagArr,key) in articletags' :key="key" class="tags-ul">
           <li v-for="(tag,tagkey) in tagArr.tags" :key="tagkey" class="tags-li">{{tag}}</li>
         </ul> -->
-        <li v-for="(category,key) in newCategoryArr" 
+        <!-- <li v-for="(category,key) in newCategoryArr" 
             :key="key" class="tags-li"
             @click="getArticleCategoryList(category.category)">
             {{category.category}}({{category.categoryCount}})
-        </li>
+        </li> -->
+         <el-badge v-for="(category,key) in newCategoryArr"
+                   :value='category.categoryCount' :key="key" class="item tags-li">
+              <el-button size="small" @click="getArticleCategoryList(category.category)">{{category.category}}</el-button>
+         </el-badge>
      </div>
   </div>
 </template>
@@ -127,26 +131,30 @@ li{
   padding:3px;
   margin:0;
 }
-li::after{
-  content: '、';
-}
+// li::after{
+//   content: '、';
+// }
 #articleCategory{
   background: #fff;
   box-shadow: 0px 0px 10px #888888;
   padding:5px 10px;
+  margin-bottom:30px;
   .category-container{
     // min-width:300px;
-  }
-  .tags-li{
+    margin-bottom:20px;
+     .tags-li{
       cursor: pointer;
-      padding-top:10px;
+      margin:1px 10px 10px 1px;
     }
-  .tags-li:hover{
-    text-decoration: underline;
+    .tags-li:hover{
+      text-decoration: underline;
+    }
   }
+ 
   .category-nav{
       border-bottom:1px solid #ccc;
       padding-bottom:10px;
+      margin-bottom:10px;
       span{
         font-size: 20px;
         font-style: italic;

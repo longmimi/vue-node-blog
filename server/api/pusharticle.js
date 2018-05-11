@@ -4,7 +4,7 @@ const ArticleSCM = require('../models/schema/article');
 const router = express.Router();
 
 const ArticlePush = (req, res) => {
-  console.log('req', req);
+  // console.log('req', req);
   let whatFind = {},
       articleTags = ['tags'];
   ArticleSCM.find(whatFind, articleTags).limit(3).exec((err, docs) => {

@@ -44,8 +44,8 @@
                     </div>
                   </div>
                   <div class="post-bottom-info">
-                    <h3 class="post-info-title">{{ article.title }}</h3>
-                    <p class="post-info-content">{{ article.articleContent | articleContentFilter}}</p>
+                    <p class="post-info-title">{{ article.title }}</p>
+                    <p class="post-info-content" v-html="checkContent(article.articleContent)"></p>
                   </div>
                 
               </article>
@@ -66,6 +66,23 @@
 <script>
 import Larticletags from './components/tags'
 import Larticlecateory from './components/category'
+const hljs = require('highlight.js');
+import 'highlight.js/styles/googlecode.css' //样式文件
+const md = require('markdown-it')({
+    html:         true,
+    linkify: true,
+    typographer: true,
+    highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return '<pre class="hljs"><code>' +
+               hljs.highlight(lang, str, true).value +
+               '</code></pre>';
+      } catch (__) {}
+    }
+    return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+  }
+});
 export default {
 name: 'articlehome',
 data () {
@@ -102,26 +119,36 @@ methods: {
    handleScroll(){
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       let offsetTop = this.$refs.tagCate.offsetTop 
-      console.log(scrollTop)
-      console.log('滑动的距离'+scrollTop+'距离顶部的距离'+offsetTop)
         if (scrollTop + 80 > offsetTop) {
           this.isFixed = true
           // this.isFlow = false
-          if(scrollTop < 360){
-          this.isFixed = false
-        }
+            if(scrollTop < 360){
+            this.isFixed = false
+          }
         }
          else {
-          
           this.isFixed = false
           // this.isFlow = true 
         }
+   },
+   checkContent(value){
+     let _articleContent = md.render(value)
+     return _articleContent.length > 100 ? _articleContent.substr(0,80) + '......' : _articleContent;
    }
 },
 computed: {
    commentFilter(value){
      return value.length
-   }
+    }
+  //   articleContentFilter(value){
+  //     console.log(value,'aaaaaaaaaaaaaaaaaaaaaaaaaa')
+  //   //  let articleValue = md.render(value)
+  //    if(articleValue.length > 100){
+  //      articleValue = articleValue.substr(0,100)
+  //      console.log(articleValue)
+  //    }
+  //    return articleValue;
+  //  }
 },
 mounted(){
    this.getArticleList();   //获取文章列表
@@ -131,12 +158,6 @@ filters:{
   TagsFilter(value){
     return value.join(',')
   },
-   articleContentFilter(value){
-     if(value.length > 100){
-       value = value.substr(0,100)
-     }
-     return value;
-   },
    commentFilter(value){
      return value.length
    }
@@ -236,10 +257,18 @@ a{
     display: block;
     background:#fff;
   }
-  .post-info-title,.post-info-content{
+  .post-info-title{
     padding:5px 20px 5px 15px;
     text-decoration: none;
     margin:2px;
+    font-size: 20px;
+    font-weight: 200;
+  }
+
+  .post-info-content{
+    font-size: 15px;
+    margin-top:-20px;
+    padding:5px 20px 5px 15px;
   }
  
   .post-icon{
@@ -310,10 +339,11 @@ a{
   }
 
   .mask-wrapper .post-title {
-    font-size: 20px;
-    /* font-weight: 200!important; */
+    font-size: 18px;
+    font-weight: 100!important;
     line-height: 1;
     color: #fff;
+    text-overflow: ellipsis;
   }
 
   .post-item:hover .info-mask .mask-wrapper .post-title {
