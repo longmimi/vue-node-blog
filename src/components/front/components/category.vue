@@ -12,10 +12,13 @@
             @click="getArticleCategoryList(category.category)">
             {{category.category}}({{category.categoryCount}})
         </li> -->
-         <el-badge v-for="(category,key) in newCategoryArr"
-                   :value='category.categoryCount' :key="key" class="item tags-li">
-              <el-button size="small" @click="getArticleCategoryList(category.category)">{{category.category}}</el-button>
-         </el-badge>
+        <div class='category-li'>
+            <el-badge v-for="(category,key) in newCategoryArr"
+                      :value='category.categoryCount' :key="key" class="item tags-li">
+                  <el-button size="small" @click="getArticleCategoryList(category.category)">{{category.category}}</el-button>
+            </el-badge> 
+        </div>
+        
      </div>
   </div>
 </template>
@@ -139,15 +142,20 @@ li{
   box-shadow: 0px 0px 10px #888888;
   padding:5px 10px;
   margin-bottom:30px;
+  border-radius: 8px;  
   .category-container{
     // min-width:300px;
     margin-bottom:20px;
-     .tags-li{
-      cursor: pointer;
-      margin:1px 10px 10px 1px;
-    }
-    .tags-li:hover{
-      text-decoration: underline;
+    .category-li{
+       word-break:break-all;
+       margin-top:10px;
+       .tags-li{
+        cursor: pointer;
+        margin:1px 10px 10px 1px;
+       }
+      .tags-li:hover{
+        text-decoration: underline;
+      }
     }
   }
  

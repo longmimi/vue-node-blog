@@ -2,22 +2,31 @@
 <div id="articleDetailPage">
    <div class="article-image" :style="{ backgroundImage: `url(${ articleItem.picUrl })`,backgroundSize:'cover', backgroundPosition: 'center' ,backgroundRepeat: 'no-repeat' }">
       <p class="article-title">{{articleItem.title}}</p>
-      <p class="article-time">{{articleItem.author}} 最后发布于 · {{articleItem.lastEditTime | timeToLocalStringFilter}} 已被浏览 {{articleItem.visit}} 次</p>
+      <p class="article-time">{{articleItem.author}} · 最后发布于 · {{articleItem.lastEditTime | timeToLocalStringFilter}} · 已被浏览 {{articleItem.visit}} 次</p>
       <!-- <p class="article-time" v-if="">最后修改于 · {{articleItem.lastEditTime | timeToLocalStringFilter}}</p> -->
    </div>
    <div class="manageArticle" v-if="isSelf">
      <div @click="editarticle()" class="manageBtn">编辑文章</div>
      <div @click="deletearticle()" class="manageBtn">删除文章</div>
    </div>
-   <div class="article-container">
-      <p v-html="displayArticleText" class="displayArticleText"></p>
-      <div class="displayArticleText-word"><p>我是有底线的</p></div>
-      <Lgivemoney class="givemoney"></Lgivemoney>
+   <div class="article-wrap">
+      <div class="article-container">
+          <p v-html="displayArticleText" class="displayArticleText"></p>
+          <div class="displayArticleText-word"><p>我是有底线的</p></div>
+          <Lgivemoney class="givemoney"></Lgivemoney>
+      </div>
+      <div class="article-comment">
+        <Lcomment></Lcomment>
+      </div>
    </div>
+  
+   
+   
 </div>  
 </template>
 <script>
 import Lgivemoney from './components/givemoney'
+import Lcomment from './components/comment'
 const hljs = require('highlight.js');
 import 'highlight.js/styles/googlecode.css' //样式文件
 const md = require('markdown-it')({
@@ -51,7 +60,8 @@ export default{
     this.addVisit(this.articleId);
   },
   components:{
-    Lgivemoney
+    Lgivemoney,
+    Lcomment
   },
   methods: {
     getArticleDetail(id){
@@ -216,6 +226,9 @@ export default{
     background: rgba(0,0,0,0.5);
     z-index:1;
   }
+  .article-wrap{
+   width:100%;
+   bordeer:10px solid black;
   .article-container{
     overflow: hidden;
     position: absolute;
@@ -232,6 +245,7 @@ export default{
     .displayArticleText{
       margin-bottom:50px;
     }
+    
     .displayArticleText-word{
        width:100%;
        height:1px;
@@ -248,10 +262,26 @@ export default{
        }
       }
   }
+  .article-comment{
+      overflow: hidden;
+      position: absolute;
+      z-index:20;
+      width:60%;
+      left:50%;
+      bottom:0%;
+      transform: translateX(-50%);
+      padding:10px 20px 10px 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px #888888;
+      margin-bottom:100px;
+    }
   .givemoney{
     margin:20px 0;
     cursor: pointer;
   }
+  }
+
 }
 @media (max-width:600px){
   #articleDetailPage{

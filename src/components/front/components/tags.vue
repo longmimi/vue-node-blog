@@ -145,16 +145,17 @@ li,ul{
 // }
 
 #articleTags{
-  background: #fff;
-  box-shadow: 0px 0px 10px #888888;
-  padding:5px 10px;
-  margin-bottom:30px;
+
   .tags-container{
     margin-bottom:20px;
+    background: #fff;
+    box-shadow: 0px 0px 10px #888888;
+    padding:5px 10px;
+    margin-bottom:30px;
+    border-radius: 8px;
     .tag-li{
       word-break:break-all;
       margin-top:10px;
-      
       .tags-li{
         cursor: pointer;
         margin:1px 10px 10px 1px;

@@ -27,7 +27,8 @@ export default {
 <style>
 
 body{
-  background:url(./assets/LbackgroundImage.png)
+  /* background:url(./assets/LbackgroundImage.png); */
+  background:#f1f3f4;
 }
 img{
   width:100%;
@@ -35,4 +36,7 @@ img{
 .el-badge__content{
       background-color: rgb(93, 105, 106);
 }
+.el-collapse-item__header{
+        padding-left:10px;
+      }
 </style>
