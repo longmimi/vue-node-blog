@@ -5,8 +5,7 @@ const router = express.Router();
 const ArticleTagsByTagName = (req, res) => {
   let whatFind = {
     tags: {
-      $regex: req.query.tagName,
-      $options: 'i'
+      $regex: req.query.tagName
     }
   }
   ArticleSCM.find(whatFind).exec((err, docs) => {

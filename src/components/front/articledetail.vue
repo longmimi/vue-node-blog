@@ -14,9 +14,10 @@
           <p v-html="displayArticleText" class="displayArticleText"></p>
           <div class="displayArticleText-word"><p>我是有底线的</p></div>
           <Lgivemoney class="givemoney"></Lgivemoney>
+          <Lcomment></Lcomment>
       </div>
       <div class="article-comment">
-        <Lcomment></Lcomment>
+        
       </div>
    </div>
   
@@ -227,8 +228,7 @@ export default{
     z-index:1;
   }
   .article-wrap{
-   width:100%;
-   bordeer:10px solid black;
+   
   .article-container{
     overflow: hidden;
     position: absolute;
@@ -263,18 +263,7 @@ export default{
       }
   }
   .article-comment{
-      overflow: hidden;
-      position: absolute;
-      z-index:20;
-      width:60%;
-      left:50%;
-      bottom:0%;
-      transform: translateX(-50%);
-      padding:10px 20px 10px 20px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0px 0px 10px #888888;
-      margin-bottom:100px;
+      
     }
   .givemoney{
     margin:20px 0;

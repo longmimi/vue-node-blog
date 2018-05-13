@@ -94,11 +94,51 @@ const updateArticle = (req, res) => {
         }
     })
    
-
+}
+const submitComment = ( req,res) => {
+    let updateInfo = {
+        title:req.body.title,
+        category:req.body.category,
+        tags:req.body.tags,
+        articleContent: req.body.articleContent,
+        lastEditTime:req.body.creatTime,
+        picUrl: req.body.picUrl,
+        editId: req.body.editId
+    }
+    // console.log(updateInfo,'updateInfo----------------')
+    ArticleSCM.findByIdAndUpdate(
+        {
+            _id:updateInfo.editId
+        },
+        {
+            $set:{
+                title: updateInfo.title,
+                tags: updateInfo.tags,
+                category:updateInfo.category,
+                lastEditTime:updateInfo.lastEditTime,
+                articleContent:updateInfo.articleContent,
+                picUrl:updateInfo.picUrl
+            }
+        },
+        {
+            new:true
+        }
+    ).exec( (err,docs) => {
+        if(err){
+            console.log(err,'跟新数据的err------')
+        }else{
+            console.log(docs,'更新数据的docs--------');
+             res.json({
+                status:0,
+                updateInfo:docs
+            })
+        }
+    })
 }
 
 router.post('/api/addArticle', addArticle)
 router.get('/api/deleteArticle', deleteArticle)
 router.post('/api/updateArticle', updateArticle)
+router.post('/api/submitcomment', submitComment)
 module.exports = router
 
