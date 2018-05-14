@@ -97,27 +97,21 @@ const updateArticle = (req, res) => {
 }
 const submitComment = ( req,res) => {
     let updateInfo = {
-        title:req.body.title,
-        category:req.body.category,
-        tags:req.body.tags,
-        articleContent: req.body.articleContent,
-        lastEditTime:req.body.creatTime,
-        picUrl: req.body.picUrl,
-        editId: req.body.editId
+        whoSubmit:req.body.whoSubmit,
+        commentContent:req.body.commentContent,
+        articleId:req.body.articleId
     }
-    // console.log(updateInfo,'updateInfo----------------')
+    console.log(updateInfo,'updateInfo----------------')
     ArticleSCM.findByIdAndUpdate(
         {
-            _id:updateInfo.editId
+            _id:updateInfo.articleId
         },
         {
-            $set:{
-                title: updateInfo.title,
-                tags: updateInfo.tags,
-                category:updateInfo.category,
-                lastEditTime:updateInfo.lastEditTime,
-                articleContent:updateInfo.articleContent,
-                picUrl:updateInfo.picUrl
+            $push:{
+                comments: {
+                    comment:updateInfo.commentContent,
+                    whoSubmit:updateInfo.whoSubmit 
+                }    
             }
         },
         {
@@ -125,12 +119,12 @@ const submitComment = ( req,res) => {
         }
     ).exec( (err,docs) => {
         if(err){
-            console.log(err,'跟新数据的err------')
+            console.log(err,'评论数据的err------')
         }else{
-            console.log(docs,'更新数据的docs--------');
+            console.log(docs,'评论数据的docs--------');
              res.json({
                 status:0,
-                updateInfo:docs
+                commentInfo:docs
             })
         }
     })

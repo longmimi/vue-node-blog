@@ -2,13 +2,13 @@
   <div id='comment'>
      <div class="comment-container">
         <nav class="comment-nav">评论</nav>
-        <div class="comment-content">
+        <div class="comment-content" v-for="(commentItem,index) in commentListArr" :key="index">
           <p class="comment-floor">
-            1楼 :  李龙廷
+            {{index+1}}楼 :  {{commentItem.whoSubmit}}
           </p>
           <div class="comment-word">
-              <p>这篇文章写得真好</p>
-              <span>  2018-01-01 21:21:21</span>
+              <p>{{commentItem.comment}}</p>
+              <span> {{commentItem.date | timeToLocalStringFilter}}</span>
           </div>
         </div>
         <div class="comment-fa">
@@ -26,7 +26,8 @@ export default {
     data() {
       return {
          articleId:this.$route.query.articleId,
-         commentinput:''
+         commentinput:'',
+         commentListArr:[]
       }
     },
     mounted(){
@@ -48,13 +49,16 @@ export default {
               commentObj.whoSubmit = this.$store.state.userName;
               commentObj.commentContent = this.commentinput;
               commentObj.commentTime = new Date();
+              commentObj.articleId = id
+
               // console.log(commentObj)
               this.$http.post('api/submitcomment',commentObj)
               .then( res => {
-                if(res.data.status){
-                  console.log('评论的res',res);
+                if(res.data.status == 0){
+                  console.log('评论的res的数组',res.data.commentInfo.comments);
+                  this.commentListArr = res.data.commentInfo.comments;
                 }else{
-                  alert('shibai')
+                  alert('评论失败')
                 }
                 
               })
@@ -76,6 +80,11 @@ export default {
           }
           
         }
+    },
+    filters:{
+      timeToLocalStringFilter(time){
+        return new Date(time).toLocaleString()
+      }
     }
    
 }

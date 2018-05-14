@@ -34,6 +34,9 @@ const articleSchema = new Schema({
         date:{
             type:Date,
             default:Date.now()
+        },
+        whoSubmit:{
+            type:String
         }
     }],
     visit:{
