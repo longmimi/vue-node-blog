@@ -2,7 +2,10 @@
   <div id='comment'>
      <div class="comment-container">
         <nav class="comment-nav">评论</nav>
-        <div class="comment-content" v-for="(commentItem,index) in commentListArr" :key="index">
+        <div class="comment-none" v-if="commentArrList.length == 0">
+          <p>沙发留给你~赶快来评论吧</p>
+        </div>
+        <div class="comment-content" v-for="(commentItem,index) in commentArrList" :key="index">
           <p class="comment-floor">
             {{index+1}}楼 :  {{commentItem.whoSubmit}}
           </p>
@@ -23,21 +26,25 @@
 
 <script>
 export default {
+    props:['commentArrList'],
     data() {
       return {
          articleId:this.$route.query.articleId,
          commentinput:'',
-         commentListArr:[]
+         newArr:this.commentArrList
       }
     },
     mounted(){
-       
+      console.log('父组件来的',this.commentArrList)
     },
     computed: {
-       
+      //  newArr(){
+      //    return this.commentArrList
+      //  }
     },
     methods: {
         submitComment(id){
+          let _self = this;
           if(this.$store.state.hasLogin){
             if(this.commentinput.length > 0  && this.commentinput.trim() != ''){
               // 评语对象
@@ -55,10 +62,11 @@ export default {
               this.$http.post('api/submitcomment',commentObj)
               .then( res => {
                 if(res.data.status == 0){
-                  console.log('评论的res的数组',res.data.commentInfo.comments);
-                  this.commentListArr = res.data.commentInfo.comments;
+                  // console.log('评论的res的数组',res.data.commentInfo.comments);
+                  _self.newArr = res.data.commentInfo.comments;
+                  _self.$emit('commented',_self.newArr)
                 }else{
-                  alert('评论失败')
+                  alert('评论失败,请重试')
                 }
                 
               })
@@ -78,7 +86,7 @@ export default {
                 offset:100
               });
           }
-          
+          this.commentinput = ''
         }
     },
     filters:{
@@ -106,6 +114,7 @@ export default {
        border:1px solid #ccc; 
        border-bottom:1px solid #ccc;
        border-radius: 8px;
+       margin-bottom:5px;
       .comment-floor{
         display:block;
         overflow: hidden;

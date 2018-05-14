@@ -14,7 +14,7 @@
           <p v-html="displayArticleText" class="displayArticleText"></p>
           <div class="displayArticleText-word"><p>我是有底线的</p></div>
           <Lgivemoney class="givemoney"></Lgivemoney>
-          <Lcomment></Lcomment>
+          <Lcomment :commentArrList="commentArrList" @commented="mycommented($event)"></Lcomment>
       </div>
       <div class="article-comment">
         
@@ -27,7 +27,7 @@
 </template>
 <script>
 import Lgivemoney from './components/givemoney'
-import Lcomment from './components/comment'
+// import Lcomment from './components/comment'
 const hljs = require('highlight.js');
 import 'highlight.js/styles/googlecode.css' //样式文件
 const md = require('markdown-it')({
@@ -53,16 +53,28 @@ export default{
       displayArticleText:'',
       isSelf: false,
       _articleId:'',
-      articleCache:''
+      articleCache:'',
+      commentArrList:[]
     }
   },
-  mounted(){
+  created(){
     //调用访问加一接口
     this.addVisit(this.articleId);
   },
+  watch:{
+    commentArrList(){
+      console.log('bianl')
+    }
+  },
   components:{
     Lgivemoney,
-    Lcomment
+    'Lcomment':() => {
+     
+        return import('./components/comment')
+     
+         
+    }
+      
   },
   methods: {
     getArticleDetail(id){
@@ -75,6 +87,7 @@ export default{
       .then( res => {
         // console.log('获取文章详情的res',res.data)
         _self.articleItem = res.data.articledetail;
+        _self.commentArrList = res.data.articledetail.comments; //评论的数组
         //缓存对象，为了编辑文章功能
         _self.articleCache = res.data.articledetail;
         _self.displayArticleText = md.render(_self.articleItem.articleContent);
@@ -156,6 +169,9 @@ export default{
             }
           }) 
       }
+    },
+    mycommented(val){
+      this.commentArrList = val
     }
   },
   filters:{

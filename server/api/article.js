@@ -99,7 +99,8 @@ const submitComment = ( req,res) => {
     let updateInfo = {
         whoSubmit:req.body.whoSubmit,
         commentContent:req.body.commentContent,
-        articleId:req.body.articleId
+        articleId:req.body.articleId,
+        date:req.body.commentTime
     }
     console.log(updateInfo,'updateInfo----------------')
     ArticleSCM.findByIdAndUpdate(
@@ -110,7 +111,8 @@ const submitComment = ( req,res) => {
             $push:{
                 comments: {
                     comment:updateInfo.commentContent,
-                    whoSubmit:updateInfo.whoSubmit 
+                    whoSubmit:updateInfo.whoSubmit,
+                    date:updateInfo.date
                 }    
             }
         },
