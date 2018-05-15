@@ -29,7 +29,7 @@
                               <img src="../../assets/visit.png" alt="" class="post-icon-visit" >
                               {{ article.visit }}
                             </span>
-                            <span :title="`评论数为 ${article.comments | commentFilter}`">
+                            <span :title="`评论数为 ${article.comments.length}`">
                               <img src="../../assets/comment.png" alt="" class="post-icon-visit" >
                               {{ article.comments | commentFilter}}
                             </span>
@@ -172,7 +172,7 @@ methods: {
                 scrollMargin = cosParameter - cosParameter * Math.cos( scrollCount * scrollStep );
                 window.scrollTo( 0, ( scrollHeight - scrollMargin ) );
               } else {
-                clearInterval(scrollInterval);
+                clearInterval(scrollInterval); 
               }
             }, 1);
    }

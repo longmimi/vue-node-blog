@@ -19,18 +19,24 @@ const Register = (req,res) => {
     // console.log(user,'user')
     if(user){
       res.json({
-        success:false,
-        error:'该账户已注册'
+        status:1,
+        msg:'该账户已注册！'
       })
     }else{
       userRegister.save((err,user) => {
         // console.log('这里存储用户注册信息')
         if(err){
           console.log(err,'错误信息')
-          res.json(err)
+          res.json({
+            status:1,
+            msg:'注册失败，请重试'
+          })
         }else{
           // console.log(user,'用户user')
-          res.json(user)
+          res.json({
+            status:0,
+            msg:'恭喜注册成功！'
+          })
         }
       })
     }

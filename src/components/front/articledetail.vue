@@ -20,14 +20,17 @@
         
       </div>
    </div>
-  
-   
-   
+   <!-- 返回顶部组件 -->
+   <div class="backToTop">
+      <Lbacktop @myclick="backToTop"></Lbacktop>
+   </div>
+     
 </div>  
 </template>
 <script>
 import Lgivemoney from './components/givemoney'
 // import Lcomment from './components/comment'
+import Lbacktop from './components/backTop'
 const hljs = require('highlight.js');
 import 'highlight.js/styles/googlecode.css' //样式文件
 const md = require('markdown-it')({
@@ -69,11 +72,10 @@ export default{
   components:{
     Lgivemoney,
     'Lcomment':() => {
-     
         return import('./components/comment')
-     
-         
-    }
+        //计划使用异步组件完成，后期完善   
+    },
+    Lbacktop
       
   },
   methods: {
@@ -172,7 +174,24 @@ export default{
     },
     mycommented(val){
       this.commentArrList = val
-    }
+    },
+     backToTop(){
+        const scrollHeight = window.scrollY,
+              scrollStep = Math.PI / ( 2000 / 15 ),
+              cosParameter = scrollHeight / 2;
+        let scrollCount = 0,
+            scrollMargin,
+            scrollInterval = setInterval(function () {
+              if ( window.scrollY != 0 ) {
+                scrollCount = scrollCount + 1;  
+                scrollMargin = cosParameter - cosParameter * Math.cos( scrollCount * scrollStep );
+                window.scrollTo( 0, ( scrollHeight - scrollMargin ) );
+              } else {
+                clearInterval(scrollInterval);
+              }
+            }, 1);
+      
+     }       
   },
   filters:{
     timeToLocalStringFilter(time){
@@ -245,22 +264,22 @@ export default{
   }
   .article-wrap{
    
-  .article-container{
-    overflow: hidden;
-    position: absolute;
-    z-index:20;
-    width:60%;
-    left:50%;
-    top:52%;
-    transform: translateX(-50%);
-    padding:10px 20px 10px 20px;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0px 0px 10px #888888;
-    margin-bottom:100px;
-    .displayArticleText{
-      margin-bottom:50px;
-    }
+    .article-container{
+      overflow: hidden;
+      position: absolute;
+      z-index:20;
+      width:60%;
+      left:50%;
+      top:52%;
+      transform: translateX(-50%);
+      padding:10px 20px 10px 20px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0px 0px 10px #888888;
+      margin-bottom:100px;
+      .displayArticleText{
+        margin-bottom:50px;
+      }
     
     .displayArticleText-word{
        width:100%;
@@ -284,8 +303,14 @@ export default{
   .givemoney{
     margin:20px 0;
     cursor: pointer;
+    }
   }
+  .backToTop{
+    position: fixed;
+    right: 20px;
+    bottom: 30px;
   }
+
 
 }
 @media (max-width:600px){

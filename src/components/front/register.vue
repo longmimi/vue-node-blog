@@ -90,10 +90,16 @@ export default {
           // console.log(valid)  // true
           this.$http.post('/api/register',formData)
           .then( res => {
-            console.log(res.data)
-            if(res.data.error){
-              console.log('返回的错误信息',res.data.error)
-              this.$message.error(res.data.error);
+            // console.log(res.data)
+            if(res.data.status == 1){
+              // console.log('返回的错误信息',res.data.error)
+              // this.$message.error(res.data.msg);
+              this.$notify({
+                    title: '注册失败',
+                    message:`${res.data.msg}`,
+                    type: 'error',
+                    offset:100
+              });
               return false;
             }
             else{
@@ -111,7 +117,7 @@ export default {
           .catch(err => {
             // this.$message.error(`${err.message}`)
              this.$notify({
-                      title: '成功',
+                      title: '注册失败',
                       message:`${err.message}`,
                       type: 'error',
                       offset:130
