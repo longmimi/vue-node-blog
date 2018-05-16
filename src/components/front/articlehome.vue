@@ -180,7 +180,7 @@ methods: {
 computed: {
    commentFilter(value){
      return value.length
-    }
+  }
   //   articleContentFilter(value){
   //     console.log(value,'aaaaaaaaaaaaaaaaaaaaaaaaaa')
   //   //  let articleValue = md.render(value)

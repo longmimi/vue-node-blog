@@ -4,6 +4,7 @@
           <router-link :to="{name:'home'}"><img class="logoImg" src='../../../assets/longLogo.png'></router-link>
           <ul>
             <li class="my-nav-head" ><router-link style="color:#f5f5f5;font-size:18px;" :to="{ name: 'newPaper'}">新建</router-link></li>
+            <li class="my-nav-head" v-if="this.$store.state.userName === 'admin'"><router-link style="color:#f5f5f5;font-size:16px;" :to="{ name: 'backmanage'}">后台管理</router-link></li>
             <li class="my-nav-head" v-if="this.$store.state.hasLogin === false"><router-link style="color:#f5f5f5;font-size:18px;" :to="{ name: 'login'}">登录</router-link></li>
             <li class="my-nav-head" v-else>
             <el-button v-popover:popover5 type="text" style="color:#f5f5f5;font-size:18px;margin:0 12px 0 6px">{{userName}}</el-button>

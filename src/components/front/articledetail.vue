@@ -62,12 +62,11 @@ export default{
   },
   created(){
     //调用访问加一接口
+    this.backToTop(1);
     this.addVisit(this.articleId);
   },
   watch:{
-    commentArrList(){
-      console.log('bianl')
-    }
+   
   },
   components:{
     Lgivemoney,
@@ -175,23 +174,30 @@ export default{
     mycommented(val){
       this.commentArrList = val
     },
-     backToTop(){
-        const scrollHeight = window.scrollY,
-              scrollStep = Math.PI / ( 2000 / 15 ),
-              cosParameter = scrollHeight / 2;
-        let scrollCount = 0,
-            scrollMargin,
-            scrollInterval = setInterval(function () {
-              if ( window.scrollY != 0 ) {
-                scrollCount = scrollCount + 1;  
-                scrollMargin = cosParameter - cosParameter * Math.cos( scrollCount * scrollStep );
-                window.scrollTo( 0, ( scrollHeight - scrollMargin ) );
-              } else {
-                clearInterval(scrollInterval);
-              }
-            }, 1);
-      
-     }       
+    backToTop(ref){
+      let duration;
+      //ref判断返回顶部所用时间
+      if(ref == 1){
+        duration = 15
+      }else{
+         duration = 2000
+      }
+      const scrollHeight = window.scrollY,
+            scrollStep = Math.PI / ( duration / 15 ),
+            cosParameter = scrollHeight / 2;
+      let scrollCount = 0,
+          scrollMargin,
+          scrollInterval = setInterval(function () {
+            if ( window.scrollY != 0 ) {
+              scrollCount = scrollCount + 1;  
+              scrollMargin = cosParameter - cosParameter * Math.cos( scrollCount * scrollStep );
+              window.scrollTo( 0, ( scrollHeight - scrollMargin ) );
+            } else {
+              clearInterval(scrollInterval);
+            }
+          }, 1);
+    
+    }       
   },
   filters:{
     timeToLocalStringFilter(time){

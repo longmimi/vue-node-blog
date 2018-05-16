@@ -63,15 +63,26 @@ const Login = (req,res) => {
         message:'账号不存在'
       })
     }else if(userLogin.password === user.password){
-      var name = req.body.name;
-      // 用户信息写入session
-      user.password = null;
-      req.session.user = user;
-      res.json({
-        success:true,
-        message:'登录成功',
-        name:user.name
-      })
+      if(userLogin.name == 'admin'){
+        res.json({
+          success:true,
+          isAdmin:true,
+          message:'欢迎您，管理员！',
+          name:'admin'
+        })
+      }else{
+          var name = req.body.name;
+          console.log(name,'2222222222222222222222222222')
+          // 用户信息写入session
+          user.password = null;
+          req.session.user = user;
+          res.json({
+            success:true,
+            message:'登录成功',
+            name:user.name
+          })
+      }
+     
     }else{
       res.json({
         success:false,

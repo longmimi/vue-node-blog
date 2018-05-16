@@ -29,6 +29,25 @@ const ArticleHome = (req, res) => {
     })
 }
 
+const ArticleHomeAll = (req,res) => {
+   let whatFind = {}
+   ArticleSCM.find(whatFind)
+   .sort({'creatTime':-1})
+   .exec((err,docs) => {
+     if(err){
+       console.log(err,'backmange ArticleHomeAll ')
+     }else{
+       console.log(docs,'backmange ArticleHomeAll');
+       res.json({
+         status:0,
+         msg:'查询标签成功',
+         articlehomeall:docs
+       })  
+    }
+   })
+
+}
+
 const pagination = (req,res) => {
    let whatFind = {},
        page = req.query.pageNumber;
@@ -53,6 +72,7 @@ const pagination = (req,res) => {
 
 router.get('/api/getarticlehome', ArticleHome);
 router.get('/api/getpagination',pagination);
+router.get('/api/getarticlehomeall',ArticleHomeAll);
 
 module.exports = router
 

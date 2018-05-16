@@ -8,6 +8,7 @@
 <script>
 import Lbigimage from './components/bigImage'
 import Larticlehome from './articlehome'
+import Lfooter from './components/footer';
 export default {
   name: 'home',
   data () {
@@ -17,7 +18,8 @@ export default {
   },
   components:{
     Lbigimage,
-    Larticlehome
+    Larticlehome,
+    Lfooter
   }
 }
 </script>

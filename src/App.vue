@@ -4,12 +4,14 @@
       <router-view>
         <Lhome></Lhome>
       </router-view>
+      <!-- <Lfooter></Lfooter> -->
   </div>
 </template>
 
 <script>
 import Lheader from './components/front/components/header';
 import Lhome from './components/front/home';
+import Lfooter from './components/front/components/footer';
 export default {
   name: 'App',
   data(){
@@ -19,7 +21,8 @@ export default {
   },
   components:{
       Lheader,
-      Lhome
+      Lhome,
+      Lfooter
   }
 }
 </script>
@@ -38,5 +41,9 @@ img{
 }
 .el-collapse-item__header{
         padding-left:10px;
-      }
+}
+.el-message-box__message{
+    max-height: 380px;
+    overflow: scroll;
+}
 </style>

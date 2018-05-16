@@ -95,15 +95,26 @@
                 .then(res => {
                     console.dir(res.data+'登录返回数据')
                     if (res.data.success) {
-                      // this.$message.success(`${res.data.message}`)
-                       this.$notify({
-                        title: '成功',
-                        message: `${res.data.message}`,
-                        type: 'success',
-                        offset:130
-                      });
-                      // 登录成功 跳转至首页
-                      this.$router.push('/');
+                      if(res.data.isAdmin){
+                          this.$notify({
+                          title: '成功',
+                          message: `${res.data.message}`,
+                          type: 'success',
+                          offset:100
+                        });
+                        this.$router.push({name:'backmanage'})
+                      }else{
+                          // this.$message.success(`${res.data.message}`)
+                          this.$notify({
+                            title: '成功',
+                            message: `${res.data.message}`,
+                            type: 'success',
+                            offset:130
+                          });
+                          // 登录成功 跳转至首页
+                          this.$router.push('/');
+                      }
+                     
                       sessionStorage.setItem('userName_session', res.data.name);
                       this.$store.dispatch('showUserName',{
                         userName:res.data.name,

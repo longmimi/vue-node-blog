@@ -9,6 +9,7 @@ import LnewPaper from '@/components/front/newPaper'
 import LuserCenter from '@/components/front/userCenter'
 import Larticledetail from '@/components/front/articledetail'
 import LarticleTagsList from '@/components/front/tagarticlelist'
+import Lbackmanage from '@/components/back/backmanage'
 export default new Router({
   mode:'history',
   routes: [
@@ -67,6 +68,14 @@ export default new Router({
         title:'标签文章'
       },
       component: LarticleTagsList
+    },
+    {
+      path:'/backmanage',
+      name:'backmanage',
+      meta:{
+        title:'后台管理'
+      },
+      component:Lbackmanage
     }
   ]
 })
