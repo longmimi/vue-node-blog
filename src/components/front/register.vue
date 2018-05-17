@@ -82,7 +82,8 @@ export default {
       //发送的数据
       let formData = {
         name:user.name,
-        password:user.password
+        password:user.password,
+        registertime:new Date()
       }
       //表单验证
       this.$refs['formRegister'].validate((valid) => {

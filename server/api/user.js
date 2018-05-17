@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/schema/user');
+const ArticleSCM = require('../models/schema/article');
 const sha1 = require('sha1');
 const checkLogin = require('../middlewears/checkLogin').checkLogin
 const checkNotLogin = require('../middlewears/checkLogin').checkNotLogin
@@ -9,7 +10,8 @@ const checkNotLogin = require('../middlewears/checkLogin').checkNotLogin
 const Register = (req,res) => {
   let userRegister = new User({
     name:req.body.name,
-    password:sha1(req.body.password) //密码加密
+    password:sha1(req.body.password),
+    registertime:req.body.registertime
   })
 
   User.findOne({
@@ -93,8 +95,72 @@ const Login = (req,res) => {
   .catch(err => res.json(err))
 }
 
+//后端查询所有用户信息
+const backUserInfoAll = (req,res) => {
+   let whatFind = {};
+   User.find(whatFind)
+   .exec((err,docs) => {
+     if(err){
+       console.log(err,'backUserInfoAll backUserInfoAll ')
+     }else{
+      // let authorTempArr = [];
+      // docs.forEach( (item,index) => {
+      //     authorTempArr.push(item.name)
+      // })    
+      var dataPromise = new Promise( (resolve,reject) => {
+          let mydocs = [];
+          for(let i = 0; i < docs.length;i++){
+            let whatFindAuthor = {
+              author:{
+                $regex:docs[i].name
+              }
+            }
+            ArticleSCM.find(whatFindAuthor).exec( (err,articlecountres) => {
+            if(err){
+              console.log(err,'articlecountres ======> err')
+            }else{
+              let tempObj = Object.assign({}, docs[i]);
+            
+              // console.log(docs[i],'docs[i]=======')       
+                  
+              
+              tempObj._doc.pushCount = articlecountres.length;
+              let _tempObj = tempObj._doc;
+              // console.log(_tempObj,'_tempObj=================')
+              mydocs.push(_tempObj);
+            }
+          })
+        }
+        setTimeout(() => {
+          // console.log(mydocs,'mydocs==============')
+           resolve(mydocs)
+        }, 500);
+         
+      })
+      
+      
+      
+      //  console.log(docs,'backmange ArticleHomeAll');
+      dataPromise.then( _mydocs => {
+        console.log(_mydocs,'_mydocs============')
+         res.json({
+         status:0,
+         msg:'查询所有用户成功',
+         userinfoall:_mydocs
+       })  
+      })
+      
+    }
+   })
+
+}
+
+
+
+
 router.post('/api/register',checkNotLogin,Register)
 router.post('/api/login',checkNotLogin,Login)
+router.get('/api/getuserall',backUserInfoAll)
 
 module.exports = router
 

@@ -37,7 +37,7 @@ const ArticleHomeAll = (req,res) => {
      if(err){
        console.log(err,'backmange ArticleHomeAll ')
      }else{
-       console.log(docs,'backmange ArticleHomeAll');
+      //  console.log(docs,'backmange ArticleHomeAll');
        res.json({
          status:0,
          msg:'查询标签成功',

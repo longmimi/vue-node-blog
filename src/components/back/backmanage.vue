@@ -50,90 +50,130 @@
         <el-table  v-if="itemshow1"
             :data="tableDataArticle"
             style="width: 100%"
-            max-height="500">
+            max-height="570">
             <el-table-column
               fixed
               prop="title"
               label="标题"
-              width="150">
+              width="220">
             </el-table-column>
 
             <el-table-column
               prop="author"
               label="作者"
-              width="80">
+              width="100">
             </el-table-column>
 
             <el-table-column
               prop="time"
-              label="日期"
-              width="200">
+              label="发布日期"
+              width="230">
+            </el-table-column>
+
+             <el-table-column
+              prop="lasttime"
+              label="最后发布日期"
+              width="230">
             </el-table-column>
 
             <el-table-column
               prop="category"
               label="所属分类"
-              width="100">
+              width="120">
             </el-table-column>
 
              <el-table-column
               prop="tag"
               label="所含标签"
-              width="300">
+              width="220">
             </el-table-column>
 
             <el-table-column
               prop="visit"
               label="浏览量"
-              width="70">
+              width="80">
             </el-table-column>   
 
             <el-table-column
               fixed="right"
               label="操作"
-              width="120">
+              width="150">
               <template slot-scope="scope">
                 <el-button
-                  @click.native.prevent="watchDetail(scope.$index, tableData4)"
+                  @click.native.prevent="watchDetail(scope.$index, tableDataArticle)"
                   type="text"
                   size="small">
                   查看详情
                 </el-button>
-                <el-button type="text" size="small">编辑</el-button>
+                <el-button 
+                  @click.native.prevent="deleteArticle(scope.$index, tableDataArticle)"
+                  type="text" size="small">删除
+                </el-button>
+
+                
+
+
               </template>
             </el-table-column>
            </el-table>
-
-           <el-table   v-if="itemshow2"
-              :data="tableData"
-              style="width: 100%"
-              :default-sort = "{prop: 'date', order: 'descending'}"
-              >
-              <el-table-column
-                prop="date"
-                label="日期"
-                sortable
-                width="180">
-              </el-table-column>
-              <el-table-column
-                prop="name"
-                label="姓名"
-                sortable
-                width="180">
-              </el-table-column>
-              <el-table-column
-                prop="address"
-                label="地址"
-                :formatter="formatter">
-              </el-table-column>
-           </el-table>
+           
+          <!-- 提示框 -->
+          <el-dialog
+              title="警告"
+              :visible.sync="dialogVisible"
+              width="30%">
+              <span>删除无法恢复！请谨慎处理</span>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">我不删了</el-button>
+                <el-button type="primary" @click="deleteArticleInDB(_index,_rows)">狠心删除</el-button>
+              </span>
+          </el-dialog>
+          
+          <el-table v-show="itemshow2"
+            :data="tableDataUser"
+            style="width: 100%">
+            <el-table-column type="expand">
+              <template slot-scope="props">
+                <el-form label-position="left" inline class="demo-table-expand">
+                  <el-form-item label="用户名">
+                    <span>{{ props.row.username }}</span>
+                  </el-form-item>
+                  <el-form-item label="注册时间">
+                    <span>{{ props.row.registertime }}</span>
+                  </el-form-item>
+                  <el-form-item label="用户 ID">
+                    <span>{{ props.row.userid }}</span>
+                  </el-form-item>
+                  <el-form-item label="发表文章数">
+                    <span>{{ props.row.articlecount }}</span>
+                  </el-form-item>
+                 
+                 
+                  
+                </el-form>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="用户 ID"
+              prop="userid">
+            </el-table-column>
+            <el-table-column
+              label="用户名"
+              prop="username">
+            </el-table-column>
+            <el-table-column
+              label="发表文章数"
+              prop="articlecount">
+            </el-table-column>
+          </el-table>
+          
 
 
 
 
 
           </el-col>
-       </div>
+      </div>
       </el-row>
   </div>
 </template>
@@ -164,7 +204,11 @@ export default {
        itemshow2:false,
        itemshow3:false,
        itemshow4:false,
-       tableDataArticle: []
+       tableDataArticle: [],
+       dialogVisible: false,
+       _index:0,
+       _rows:[],
+       tableDataUser: []
     }
   },
   components:{
@@ -176,6 +220,7 @@ export default {
       this.$router.push('/');
     }else{
        this.getArticleInfo();
+       this.getUserInfo();
     }
   },
   mounted(){
@@ -185,6 +230,7 @@ export default {
       handleOpen(key, keyPath) {
         console.log(key, keyPath);
         if(key == 1){
+          // this.getArticleInfo();
           this.itemshow1 = true;
           this.itemshow2 = false;
           this.itemshow3 = false;
@@ -195,63 +241,118 @@ export default {
           this.itemshow3 = false;
           this.itemshow4 = false;
         }else if(key == 3){
-          this.itemshow1 = true;
+          this.itemshow1 = false;
           this.itemshow2 = false;
-          this.itemshow3 = false;
+          this.itemshow3 = true;
           this.itemshow4 = false;
         }else{
-          this.itemshow1 = true;
+          this.itemshow1 = false;
           this.itemshow2 = false;
           this.itemshow3 = false;
-          this.itemshow4 = false;
+          this.itemshow4 = true;
         }
       },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath,'close');
-      },
-      watchDetail(index, rows) {
-      // rows.splice(index, 1);
+      //查看文章内容
+      watchDetail(index, rows) {   
         console.log(index,'index');
         console.log(rows,'rows');
-        // let showText = rows[index].address;
-        let rowContent = '\n## intro\n\n本身打算一口气把vue基础的总结完的···又是被一些事打乱（就是拖延症），这段时间很多事我想后面也许可以在博客里记录一下。今天感觉工作被迫中断了，碰壁···挤出点时间把vue基础整理完吧，关键自己的毛病，啥事越往后拖越不想弄了 :-(\n本身组件在官方文档里也是在基础部分的，也因上面的原因，加上我感觉上一篇篇幅已经有点长了，组件内容也不少，所以单独整理组件篇。\n\n>组件我理解为vue提供的一种自定义可扩展的html元素\n\n## 注册\n\n### 全局\n\n可以直接通过`Vue.component(tagName,option)`注册全局组件。直接在模板里通过标签的方式使用。`<my-component></my-component>`\n\n### 局部\n\n还有局部注册就是在vue实例中注册\n\n```javascript\nvar Child = {\n  templat';
-        let showText = md.render(rowContent)
-         this.$alert(showText, '文章内容', {
+        let rowContent = rows[index].articlecontent;
+        
+        let showText = md.render(rowContent);
+        this.$alert(showText, '文章内容', {
           dangerouslyUseHTMLString: true,
           closeOnClickModal: true,
           lockScroll:false
         });
-
       },
-      handleLeftItem(){
-        alert(this.index)
+      deleteArticle(index,rows){
+        this.dialogVisible = true;
+        this._index = index;
+        this._rows = rows;      
+      },
+      deleteArticleInDB(index,rows){
+        let ArticleId = rows[index].articleId;
+        // 表格中删除
+        rows.splice(index, 1);
+
+        this.$http.get('api/deleteArticle',{
+            params:{
+              articleId:ArticleId
+            }
+          })
+          .then( res => {
+            if(res.data.status == 0){
+              console.log('删除返回的数据',res)
+              this.$notify({
+                  title: '删除成功',
+                  message: `${res.data.msg}`,
+                  type: 'success',
+                  offset:100
+                });         
+            }else{
+              this.$notify({
+                  title: '删除失败',
+                  message: `${res.data.msg}`,
+                  type: 'success',
+                  offset:100
+              });
+            }
+          }) 
+          this.dialogVisible = false;
       },
       getArticleInfo(){
         let _self = this;
-        this.$http.get('/api/getarticlehomeall')
+        this.$http.get('api/getarticlehomeall')
         .then( res => {
-          console.log(res.data)
           if(res.data.status == 0){
             // console.log('res',res.data.articlehomeall);
             let tableDataArticleArr = res.data.articlehomeall;
             tableDataArticleArr.forEach( (item,index) => {
-              let tableDataArticleObj = {};
-              tableDataArticleObj.title = item.title;
-              tableDataArticleObj.author = item.author;
-              tableDataArticleObj.time = item.creatTime;
-              tableDataArticleObj.category = item.category;
-              tableDataArticleObj.tag = item.tags.join(',');
-              tableDataArticleObj.visit = item.visit;
-              tableDataArticleObj.articlecontent = item.articleContent;
-              this.tableDataArticle.push(tableDataArticleObj)
+                let tableDataArticleObj = {};
+                tableDataArticleObj.title = item.title;
+                tableDataArticleObj.author = item.author;
+                tableDataArticleObj.lasttime = new Date(item.lastEditTime).toLocaleString();
+                tableDataArticleObj.time = new Date(item.creatTime).toLocaleString();
+                tableDataArticleObj.category = item.category;
+                tableDataArticleObj.tag = item.tags.join(',');
+                tableDataArticleObj.visit = item.visit;
+                tableDataArticleObj.articlecontent = item.articleContent;
+                tableDataArticleObj.articleId = item._id;
+                this.tableDataArticle.push(tableDataArticleObj)
             })   
-            // this.articleObj = res.data.articlehome;
           }
         })
         .catch( err => {
             console.log('get err',err)
           }
         )
+      },
+      getUserInfo(){
+        this.$http.get('/api/getuserall')
+        .then( res => {
+          if( res.data.status == 0){
+            console.log(res.data.userinfoall,'res.data.userinfoall')
+            // this.tableDataArticle
+            let _userInfoAll = res.data.userinfoall;
+            _userInfoAll.forEach( (item,index) => {
+              let userInfoAllObj = {};
+              userInfoAllObj.userid = item._id;
+              userInfoAllObj.username = item.name;
+              userInfoAllObj.articlecount = item.pushCount;
+              if(item.registertime){
+                 userInfoAllObj.registertime =  new Date(item.registertime).toLocaleString();
+              }else{
+                userInfoAllObj.registertime = '暂无注册时间';
+              }
+              this.tableDataUser.push(userInfoAllObj)
+            })
+          }else{
+
+          }
+        })
+        .catch( err => {
+          console.log(err,'err=====> getuserinfoall')
+        })
       }
     }
 }
@@ -259,10 +360,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='less' scoped>
+ .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
 #backmanage{
   padding-top:60px;
   .mange-left{
-    // width:100%;
+    
   }
 }
 </style>

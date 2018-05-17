@@ -11,7 +11,8 @@ const addArticle = (req,res) => {
         articleContent: req.body.articleContent,
         creatTime:req.body.creatTime,
         picUrl: req.body.picUrl,
-        visit: 0
+        visit: 0,
+        lastEditTime:req.body.creatTime
     })
     console.log(req.body)
     userArticle.save((err,article) => {

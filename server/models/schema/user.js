@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
     unique:true
   },
   password:String,
-  create_time:Date
+  registertime:Date
 })
 
 const User = module.exports = mongoose.model('UserSession',userSchema)
