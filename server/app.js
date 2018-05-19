@@ -20,10 +20,17 @@ const port = process.env.PORT || 3000
 
 
 // url请求解析
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-  extended: true
-}))
+// app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({
+//     parameterLimit: 100000,
+//     limit: '50mb',
+//     extended: true
+// }))
+
+
+// 此处解决post传输图片尺寸过大的问题
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 // session
 app.use(session({

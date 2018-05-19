@@ -160,6 +160,14 @@ export default{
     margin-bottom:0px;
     border-radius: 0px;
 }
+#articleCategory /deep/ .category-container{
+    margin-bottom:0px;
+    background: #fff;
+    box-shadow: 0px 0px 0px transparent;
+    padding:0px;
+    margin-bottom:20px;
+    border-radius: 0px;
+}
 #articleCategory /deep/ .category-li{
   padding:10px;
   box-shadow: 0 0 0 #fff;

@@ -59,15 +59,24 @@ export default {
     swiperSlide
    },
    methods:{
-   
+     getPushArticle(){
+      this.$http.get('api/getpusharticle')
+      .then( res => {
+        if(res.data.status == 0){
+          console.log(res.data.pusharticle,'推荐文章')
+        }else{
+          
+        }
+      })
+     }
   },
    computed: {
     swiper() {
       return this.$refs.mySwiper.swiper
     }
  },
-  mounted () {
-    
+  mounted() {
+    this.getPushArticle();
   }
 }
 </script>

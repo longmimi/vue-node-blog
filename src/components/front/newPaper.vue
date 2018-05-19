@@ -35,7 +35,16 @@
     <div class="field">
       <label class="upload-img label">文章图片</label>
       <div class="control">
-        <input type="text" class="input" placeholder="请输入图片位于图床的URL" v-model="picUrl" />
+        <!-- <input type="text" class="input" placeholder="请输入图片位于图床的URL" v-model="picUrl" /> -->
+        <up-load-img
+          :havePre="true" 
+          :haveIcon="true" 
+          :boxWidth="100" 
+          :maxNum="1"
+          :zipFactor="0.2"
+          :photoSize="720"
+          @upload-change="handleChange">
+        </up-load-img>
       </div>
     </div>
     <br>
@@ -48,6 +57,7 @@
 
 <script>
 // import Lmarkdown from "./components/markdown.vue";
+import upLoadImg from './components/uploadImg'
 const hljs = require('highlight.js');
 import 'highlight.js/styles/googlecode.css' //样式文件
 const md = require('markdown-it')({
@@ -79,7 +89,7 @@ export default {
     };
   },
   components: {
-    
+    upLoadImg
   },
   methods: {
      pushArticle: function () {
@@ -141,6 +151,10 @@ export default {
         sessionStorage.setItem('article_category',this.inputCategory)
         sessionStorage.setItem('article_tags',this.inputTags.split("/"))
         sessionStorage.setItem('article_picUrl',this.picUrl)
+     },
+     handleChange(valArr){
+        this.picUrl = valArr[0];
+        // console.log(valArr)
      }
   },
     beforeUpdate: function () {

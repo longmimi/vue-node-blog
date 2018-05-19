@@ -8,7 +8,7 @@ const articlecategoryList = require('./categoryarticle.js')
 const articletagsListByTagName = require('./tagarticlelistbytagname.js');
 const articledetail = require('./getarticledetail.js');
 const addvisitconut = require('./addvisit.js');
-// const pagination = require('./pagination.js');
+const getpusharticle = require('./pusharticle.js');
 
 module.exports = (app) => {
     app.use(user);  //登录注册
@@ -21,5 +21,5 @@ module.exports = (app) => {
     app.use(articletagsListByTagName); //标签相关文章展示页根据 tagName 查询  之前根据Id 分类也可用
     app.use(articledetail); //ID查询文章
     app.use(addvisitconut); //访问量+1
-    // app.use(pagination); //分页查询
+    app.use(getpusharticle); //轮播获取推荐文章
 }

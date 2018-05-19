@@ -14,7 +14,7 @@ const addArticle = (req,res) => {
         visit: 0,
         lastEditTime:req.body.creatTime
     })
-    console.log(req.body)
+    // console.log(req.body)
     userArticle.save((err,article) => {
         console.log('存储文章');
         if(err){
@@ -44,7 +44,7 @@ const deleteArticle = (req,res) => {
                 msg:'删除失败，请重试！'
             })
         }else{
-            console.log('删除成功',docs)
+            // console.log('删除成功',docs)
             res.json({
                 status:0,
                 msg:'删除成功',
@@ -55,7 +55,7 @@ const deleteArticle = (req,res) => {
 }
 
 const updateArticle = (req, res) => {
-    console.log('更新文章');
+    // console.log('更新文章');
     let updateInfo = {
         title:req.body.title,
         category:req.body.category,
@@ -87,7 +87,7 @@ const updateArticle = (req, res) => {
         if(err){
             console.log(err,'跟新数据的err------')
         }else{
-            console.log(docs,'更新数据的docs--------');
+            // console.log(docs,'更新数据的docs--------');
              res.json({
                 status:0,
                 updateInfo:docs
@@ -103,7 +103,7 @@ const submitComment = ( req,res) => {
         articleId:req.body.articleId,
         date:req.body.commentTime
     }
-    console.log(updateInfo,'updateInfo----------------')
+    // console.log(updateInfo,'updateInfo----------------')
     ArticleSCM.findByIdAndUpdate(
         {
             _id:updateInfo.articleId
@@ -133,9 +133,67 @@ const submitComment = ( req,res) => {
     })
 }
 
+const getCommentInfo = (req,res) => {
+     ArticleSCM.find({},['comments'])
+     .sort({'date':-1})
+     .exec( (err,docs) => {
+        if(err){
+            console.log('查询评论出错误',err)
+            res.json({
+                status:1,
+                msg:'查询失败，请重试！'
+            })
+        }else{
+            // console.log('success',docs)
+            res.json({
+                status:0,
+                msg:'成功',
+                commentinfo: docs
+            })
+        }
+    })
+}
+
+
+const deleteComment = ( req,res) => {
+    // console.log(req.query.commentId,'--------------------')
+    ArticleSCM.findByIdAndUpdate(
+        {
+            _id:req.query.commentIdOut
+        },
+        {
+            $pull:{
+                comments: {
+                   _id:req.query.commentId
+                }    
+            }
+        }
+        // {
+        //     new:true
+        // }
+    ).exec( (err,docs) => {
+        if(err){
+            console.log(err,'评论数据的err------')
+              res.json({
+                status:1,
+                msg:'糟糕！删除失败'
+            })
+        }else{
+            console.log(docs,'评论数据的docs--------');
+             res.json({
+                status:0,
+                commentDeleteInfo:docs,
+                msg:'删除成功'
+            })
+        }
+    })
+}
+
 router.post('/api/addArticle', addArticle)
 router.get('/api/deleteArticle', deleteArticle)
 router.post('/api/updateArticle', updateArticle)
 router.post('/api/submitcomment', submitComment)
+router.get('/api/getcomment', getCommentInfo)
+router.get('/api/deleteComment', deleteComment)
 module.exports = router
 

@@ -138,14 +138,15 @@ li{
 //   content: '、';
 // }
 #articleCategory{
-  background: #fff;
-  box-shadow: 0px 0px 10px #888888;
-  padding:5px 10px;
-  margin-bottom:30px;
-  border-radius: 8px;  
+ 
   .category-container{
+     background: #fff;
+      box-shadow: 0px 0px 10px #888888;
+      padding:5px 10px;
+      margin-bottom:30px;
+      border-radius: 8px;  
     // min-width:300px;
-    margin-bottom:20px;
+     margin-bottom:20px;
     .category-li{
        word-break:break-all;
        margin-top:10px;

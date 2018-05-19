@@ -15,21 +15,21 @@
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-location"></i>
-                <span>文章管理</span>
+                <span>文章管理  &nbsp;&nbsp;{{articleTotal}}篇</span>
               </template>
             </el-submenu>
 
             <el-submenu index="2">
               <template slot="title">
                  <i class="el-icon-menu"></i>
-                <span>用户管理</span>
+                <span>用户管理  &nbsp;&nbsp;{{userTotal}}人</span>
               </template>
             </el-submenu>
 
              <el-submenu index="3">
               <template slot="title">
                 <i class="el-icon-menu"></i>
-                <span>评论管理</span>
+                <span>评论管理   &nbsp;&nbsp;{{commentTotal}}条</span>
               </template>
             </el-submenu>
 
@@ -46,8 +46,8 @@
 
       <div class="manage-right">
         <el-col :span="20" >
-
-        <el-table  v-if="itemshow1"
+        <!-- 文章管理部分 -->
+        <el-table  v-show="itemshow1"
             :data="tableDataArticle"
             style="width: 100%"
             max-height="570">
@@ -109,14 +109,12 @@
                   @click.native.prevent="deleteArticle(scope.$index, tableDataArticle)"
                   type="text" size="small">删除
                 </el-button>
-
-                
-
-
               </template>
             </el-table-column>
            </el-table>
-           
+          <!-- 文章管理部分 end-->
+
+
           <!-- 提示框 -->
           <el-dialog
               title="警告"
@@ -128,7 +126,9 @@
                 <el-button type="primary" @click="deleteArticleInDB(_index,_rows)">狠心删除</el-button>
               </span>
           </el-dialog>
-          
+
+
+          <!-- 用户管理部分 -->
           <el-table v-show="itemshow2"
             :data="tableDataUser"
             style="width: 100%">
@@ -144,15 +144,17 @@
                   <el-form-item label="用户 ID">
                     <span>{{ props.row.userid }}</span>
                   </el-form-item>
+                  <el-form-item label="最后登录时间">
+                    <span>{{ props.row.lastlogintime }}</span>
+                  </el-form-item>          
                   <el-form-item label="发表文章数">
                     <span>{{ props.row.articlecount }}</span>
-                  </el-form-item>
-                 
-                 
-                  
+                  </el-form-item>   
+                             
                 </el-form>
               </template>
             </el-table-column>
+
             <el-table-column
               label="用户 ID"
               prop="userid">
@@ -166,10 +168,58 @@
               prop="articlecount">
             </el-table-column>
           </el-table>
+          <!-- 用户管理部分  end-->
           
+          <!-- 评论管理部分 -->
+            <el-table  v-show="itemshow3"
+            :data="tableDataComment"
+            style="width: 100%"
+            max-height="570">
+            <el-table-column
+              fixed
+              prop="comment"
+              label="评论内容"
+              width="500">
+            </el-table-column>
 
+            <!-- <el-table-column
+              prop="commenttitle"
+              label="评论文章名"
+              width="230">
+            </el-table-column> -->
 
+            <el-table-column
+              prop="date"
+              label="评论日期"
+              width="300">
+            </el-table-column>
 
+            
+
+            <el-table-column
+              prop="whoSubmit"
+              label="评论人"
+              width="120">
+            </el-table-column>
+
+           
+
+            
+
+            <el-table-column
+              fixed="right"
+              label="操作"
+              width="100">
+              <template slot-scope="scopeComment">
+                <el-button 
+                  @click.native.prevent="deleteComment(scopeComment.$index, tableDataComment)"
+                  type="text" size="middle">删除
+                </el-button>
+              </template>
+            </el-table-column>
+           </el-table>
+
+          <!-- 评论管理部分 end-->
 
 
           </el-col>
@@ -205,10 +255,14 @@ export default {
        itemshow3:false,
        itemshow4:false,
        tableDataArticle: [],
-       dialogVisible: false,
+       tableDataUser: [],
+       tableDataComment:[],
+       dialogVisible: false,  
        _index:0,
-       _rows:[],
-       tableDataUser: []
+       _rows:[],  
+       articleTotal:0,  //文章总数
+       userTotal:0,  //用户总数
+       commentTotal:0  //评论总数
     }
   },
   components:{
@@ -221,6 +275,7 @@ export default {
     }else{
        this.getArticleInfo();
        this.getUserInfo();
+       this.getCommentInfo();
     }
   },
   mounted(){
@@ -307,6 +362,7 @@ export default {
           if(res.data.status == 0){
             // console.log('res',res.data.articlehomeall);
             let tableDataArticleArr = res.data.articlehomeall;
+            this.articleTotal = tableDataArticleArr.length;//文章总数
             tableDataArticleArr.forEach( (item,index) => {
                 let tableDataArticleObj = {};
                 tableDataArticleObj.title = item.title;
@@ -334,11 +390,14 @@ export default {
             console.log(res.data.userinfoall,'res.data.userinfoall')
             // this.tableDataArticle
             let _userInfoAll = res.data.userinfoall;
+            this.userTotal = _userInfoAll.length;
             _userInfoAll.forEach( (item,index) => {
               let userInfoAllObj = {};
               userInfoAllObj.userid = item._id;
               userInfoAllObj.username = item.name;
               userInfoAllObj.articlecount = item.pushCount;
+              userInfoAllObj.lastlogintime = new Date(item.lastlogintime).toLocaleString();
+
               if(item.registertime){
                  userInfoAllObj.registertime =  new Date(item.registertime).toLocaleString();
               }else{
@@ -353,6 +412,62 @@ export default {
         .catch( err => {
           console.log(err,'err=====> getuserinfoall')
         })
+      },
+      getCommentInfo(){
+        // let myCommets = [];
+        this.$http.get('/api/getcomment')
+        .then( res => {
+          if(res.data.status == 0){
+            // console.log(res.data.commentinfo,'res.data.commentinfo');
+            let _tempArr = res.data.commentinfo;
+            let _commentcount = 0;
+            _tempArr.forEach((item1,index) => {
+              item1.comments.forEach((item2,index) => {
+                _commentcount++;
+                item2._idComment = item1._id;
+                item2.date = new Date(item2.date).toLocaleString();
+                this.tableDataComment.push(item2);            
+              })
+            })
+            this.commentTotal = _commentcount;
+            // console.log(this.tableDataComment,'tableDataComment')
+          }else{
+            console.log('errr=================')
+          }
+        })
+      },
+      deleteComment(index,rows){
+        // console.log(rows[index]._id);
+        let commentId = rows[index]._id;
+        let commentIdOut = rows[index]._idComment;
+        console.log(commentId,'commentId')
+        rows.splice(index, 1);
+
+        this.$http.get('api/deleteComment',{
+            params:{
+              commentId:commentId,
+              commentIdOut:commentIdOut
+            }
+          })
+          .then( res => {
+            if(res.data.status == 0){
+              console.log('删除返回的数据',res)
+              this.$notify({
+                  title: '删除成功',
+                  message: `${res.data.msg}`,
+                  type: 'success',
+                  offset:100
+                });         
+            }else{
+              this.$notify({
+                  title: '删除失败',
+                  message: `${res.data.msg}`,
+                  type: 'success',
+                  offset:100
+              });
+            }
+          }) 
+
       }
     }
 }

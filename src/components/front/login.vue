@@ -85,7 +85,8 @@
         let user = this.formLogin;
         let formData = {
           name: user.name,
-          password: user.password
+          password: user.password,
+          lastlogintime: new Date()
         };
         // 表单验证
         this.$refs['formLogin'].validate((valid) => {

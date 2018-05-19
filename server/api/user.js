@@ -51,7 +51,8 @@ const Login = (req,res) => {
   // console.log('req.session:'+req.session)
   let userLogin = new User({
     name:req.body.name,
-    password:sha1(req.body.password) //密码加密
+    password:sha1(req.body.password), //密码加密
+    lastlogintime:req.body.lastlogintime
   })
 
   User.findOne({
@@ -73,8 +74,16 @@ const Login = (req,res) => {
           name:'admin'
         })
       }else{
-          var name = req.body.name;
-          console.log(name,'2222222222222222222222222222')
+          let name = req.body.name;
+          let _lastlogintime = req.body.lastlogintime;
+          User.update({name:name},{$set:{lastlogintime:_lastlogintime}})
+          .exec((err,docs) => {
+            if(err){
+              console.log('update lastlogintime err',err)
+            }else{
+              console.log('success')
+            }
+          })
           // 用户信息写入session
           user.password = null;
           req.session.user = user;
@@ -142,7 +151,7 @@ const backUserInfoAll = (req,res) => {
       
       //  console.log(docs,'backmange ArticleHomeAll');
       dataPromise.then( _mydocs => {
-        console.log(_mydocs,'_mydocs============')
+        // console.log(_mydocs,'_mydocs============')
          res.json({
          status:0,
          msg:'查询所有用户成功',
