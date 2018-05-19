@@ -63,8 +63,8 @@
       </div>
 
       <div :class="{articleright:isFlow,articlerightfixed:isFixed}" ref="tagCate">
-         <Larticletags></Larticletags>
-         <Larticlecateory></Larticlecateory>
+         <Larticletags class="Larticletags"></Larticletags>
+         <Larticlecateory class="Larticlecategory"></Larticlecateory>
       </div>  
     </div>
 
@@ -247,20 +247,7 @@ a{
   margin:50px auto;
 }
 
-@media (max-width: 600px) {
-  .artilce-item{
-    padding:30px 50px 50px 50px;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap; 
-}
-  .article-left{
-      width:60%;
-  }
-  .article-right{
-      width:30%;
-  }
-}
+
   /* 列表动画 */
   @keyframes comeIn {
     from {
@@ -413,6 +400,31 @@ a{
     list-style: none;
   }
 
-
+@media (max-width: 500px) {
+  .artilce-item{
+    padding:30px 50px 50px 50px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; 
+    margin-top:-50px;
+   }
+  .article-left{
+    position: absolute;
+    top:52%;
+    left:8%;
+    width:85%;
+  }
+  .articleright{
+    display: none;
+  }
+  .articlerightfixed{
+    display: none;
+  } 
+  .mypagination{
+    display: block;
+    width:57%;
+    margin:50px auto;
+  }
+}
 
 </style>

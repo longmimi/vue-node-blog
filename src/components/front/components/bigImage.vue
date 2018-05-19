@@ -1,20 +1,32 @@
 <template>
    <div id="bigImage">
           <!-- swiper -->
-      <swiper :options="swiperOption">
-          <div class="parallax-bg" slot="parallax-bg" data-swiper-parallax="-23%"></div>
-          <swiper-slide class="bannerImage" v-for='(item,index) in imgListArr' :key="index" :style="{background:`url(${item.src})`,backgroundSize:'cover'}">
-            <div class="title" data-swiper-parallax="-100">{{item.title}}</div>
-            <br>
-            <div class="subtitle" data-swiper-parallax="-200">{{item.author}}</div>
-            <div class="text" data-swiper-parallax="-300">
-              <p>{{item.content}}</p>
-            </div>
-          </swiper-slide>
-          <div class="swiper-pagination swiper-pagination-white" slot="pagination"></div>
-          <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
-          <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
-      </swiper>
+      
+          <swiper :options="swiperOption" >
+              <div class="parallax-bg" slot="parallax-bg" data-swiper-parallax="-23%"></div>
+              <swiper-slide class="bannerImage" v-for='(item,index) in imgListArr' :key="index" :style="{background:`url(${item.src})`,backgroundSize:'cover',backgroundPosition: 'center' ,backgroundRepeat: 'no-repeat'}">
+         
+                <router-link :to="{name:'articledetail',params: {id: item._id},query:{articleId: item._id}}">    
+                  
+
+                  
+                  <div class="title">
+                    <div class="articletitle">{{item.title}}</div>
+                    <div class="subtitle">{{item.author}}</div>
+                  </div>
+                
+                </router-link>
+             
+              
+                <!-- <div class="text" data-swiper-parallax="-300">
+                  
+                </div> -->
+              </swiper-slide>
+              <div class="swiper-pagination swiper-pagination-white" slot="pagination"></div>
+              <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
+              <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
+          </swiper>
+   
    </div>
 </template>
 
@@ -32,26 +44,7 @@ export default {
           autoplay: true,
           notNextTick:true   
         },
-        imgListArr:[
-          {
-            title:'推荐文章1',
-            author:'李龙廷',
-            content:'你覅无人弄完了那次是Nov改无人女in的接口v次所如何v',
-            src:require('../../../assets/banner1.png')
-          },
-          {
-            title:'推荐文章2',
-            author:'潘海两',
-            content:'你覅无人弄完了那次是Nov改无人女in的接口v次所如何v',
-            src:require('../../../assets/banner2.png')
-          },
-          {
-            title:'推荐文章3',
-            author:'流程路',
-            content:'你覅无人弄完了那次是Nov改无人女in的接口v次所如何v',
-            src:require('../../../assets/banner3.png')
-          }        
-        ]
+        imgListArr:[]
      }
    },
    components:{
@@ -63,7 +56,18 @@ export default {
       this.$http.get('api/getpusharticle')
       .then( res => {
         if(res.data.status == 0){
-          console.log(res.data.pusharticle,'推荐文章')
+          console.log(res.data.pusharticle,'推荐文章');
+          let pusharticleArr = res.data.pusharticle;
+          pusharticleArr.forEach( (item,index) => {
+              let pusharticleObj = {};
+              pusharticleObj.title = item.title;
+              pusharticleObj.author = item.author;
+              pusharticleObj.src = item.picUrl;
+              pusharticleObj.visit = item.visit;
+              pusharticleObj._id = item._id;
+              this.imgListArr.push(pusharticleObj);
+          })
+         
         }else{
           
         }
@@ -82,22 +86,16 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@media (max-width: 600px) {
-  .bannerImage{
-    width:100%;
-    height:330px;
-    color:#fff;
-    .title{
-      font-size: 35px;
-    }
-    .subtitle{
-      font-size:25px; 
-    }
-    .text{
-      font-size: 20px;
-    }
-  }
+@img-positon-left: 50%;
+@img-positon-top: 50%;
+.router-link-active {
+    text-decoration: none;
 }
+a{
+  text-decoration: none;
+  color:#fff;
+}
+
 #bigImage{
   text-align: center;
   margin:-20px 40px 0 40px;
@@ -106,18 +104,48 @@ export default {
     height:330px;
     color:#fff;
     .title{
-      font-size: 35px;
-    }
-    .subtitle{
-      font-size:25px; 
-    }
-    .text{
       font-size: 20px;
+      width:100%;
+      height:300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+       .subtitle{
+         margin-top:5px;
+          font-size:15px; 
+        }
     }
   }
   .swiperOption{
     box-shadow: 5px 5px 5px #888888;
   }
 }
-
+@media (max-width: 600px) {
+  #bigImage{
+  text-align: center;
+  margin:-20px 40px 0 40px;
+  .bannerImage{
+    width:100%;
+    height:260px;
+    color:#fff;
+    .title{
+      font-size:20px;
+      width:100%;
+      // height:300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+       .subtitle{
+         margin-top:5px;
+          font-size:15px; 
+        }
+    }
+    }
+    .swiperOption{
+      box-shadow: 5px 5px 5px #888888;
+    }
+  } 
+}
 </style>

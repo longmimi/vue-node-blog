@@ -269,7 +269,6 @@ export default{
     z-index:1;
   }
   .article-wrap{
-   
     .article-container{
       overflow: hidden;
       position: absolute;
@@ -316,8 +315,6 @@ export default{
     right: 20px;
     bottom: 30px;
   }
-
-
 }
 @media (max-width:600px){
   #articleDetailPage{
@@ -352,43 +349,49 @@ export default{
     background: rgba(0,0,0,0.5);
     z-index:1;
   }
-  .article-container{
-    overflow: hidden;
-    position: absolute;
-    left:50%;
-    z-index:20;
-    width:91%;
-    // left:50%;
-    // top:52%;
-    // transform: translateX(-50%);
-    padding:10px 20px 10px 20px;
-    background: #fff;
-    border-radius: 15px;
-    // box-shadow: 0px 0px 10px #888888;
-    margin-bottom:100px;
-    .displayArticleText{
-      margin-bottom:50px;
-    }
+  .article-wrap{
+    .article-container{
+      overflow: hidden;
+      position: absolute;
+      z-index:20;
+      width:92%;
+      left:50%;
+      top:52%;
+      transform: translateX(-50%);
+      padding:10px 20px 10px 20px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0px 0px 10px #888888;
+      margin-bottom:100px;
+      .displayArticleText{
+        margin-bottom:50px;
+      }
+    
     .displayArticleText-word{
        width:100%;
        height:1px;
        background: #ccc;
        margin:30px 0px;
        position: relative;
-      //  p{
-      //    position: absolute;
-      //    top:-28px;
-      //    left:50%;
-      //    transform: translateX(-50%);
-      //    background: #fff;
-      //    padding:0 7px;
-      //  }
+       p{
+         position: absolute;
+         top:-28px;
+         left:50%;
+         transform: translateX(-50%);
+         background: #fff;
+         padding:0 7px;
+       }
       }
   }
+  .article-comment{
+      
+    }
   .givemoney{
     margin:20px 0;
     cursor: pointer;
+    }
   }
+ 
 }
 }
 
