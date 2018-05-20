@@ -162,4 +162,16 @@ a {
 .router-link-active {
     text-decoration: none;
 }
+@media (max-width:600px){
+  #my-register{
+    padding-top: 120px;
+    .box-card{
+      width:95%;
+      margin: 0 auto;
+      .el-col-12{
+        width:100%;
+      }
+    }
+  }
+}
 </style>

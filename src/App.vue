@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-      <Lheader class=""></Lheader>
+      <Lheader class="myheader"></Lheader>
       <router-view>
-        <Lhome></Lhome>
+        <Lhome class="mybody"></Lhome>
       </router-view>
-      <!-- <Lfooter></Lfooter> -->
+      <!-- <Lfooter class="myfooter"></Lfooter> -->
   </div>
 </template>
 
@@ -21,8 +21,8 @@ export default {
   },
   components:{
       Lheader,
-      Lhome,
-      Lfooter
+      Lhome
+      // Lfooter
   }
 }
 </script>

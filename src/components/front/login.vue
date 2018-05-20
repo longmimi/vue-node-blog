@@ -171,4 +171,16 @@
     margin: 0 auto;
   }
 }
+@media (max-width:600px){
+  .my-login{
+  padding-top: 120px;
+   .box-card{
+    width:95%;
+    margin: 0 auto;
+    .el-col-12{
+      width:100%;
+    }
+  }
+}
+}
 </style>

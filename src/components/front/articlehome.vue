@@ -68,6 +68,10 @@
       </div>  
     </div>
 
+    <!-- <div :class="{footer:isFooterShow}">
+      <p>designed by longtean</p>
+    </div> -->
+
 
   </div>
 </template>
@@ -102,7 +106,8 @@ data () {
       currentPage: 1, // 记录当前点击页码
       isFixed: false,
       isFlow:true,
-      totalItem: 0 //总博客个数
+      totalItem: 0, //总博客个数
+      isFooterShow: false
   }
 },
 components:{
@@ -141,6 +146,12 @@ methods: {
           // this.isFlow = true 
         }
    },
+  //  handleScroll2(){
+  //     let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+  //     let offsetHeight = document.body.clientHeight   
+  //      console.log(scrollTop,'划过的距离')
+  //      console.log(offsetHeight,'页面整体的的距离')
+  //  },
    checkContent(value){
      let _articleContent = md.render(value)
      return _articleContent.length > 100 ? _articleContent.substr(0,80) + '......' : _articleContent;
@@ -194,6 +205,7 @@ computed: {
 mounted(){
    this.getArticleList();   //获取文章列表
    window.addEventListener('scroll', this.handleScroll)
+  //  window.addEventListener('scroll', this.handleScroll2)
 },
 filters:{
   TagsFilter(value){
@@ -244,7 +256,7 @@ a{
 .mypagination{
   display: block;
   width:34%;
-  margin:50px auto;
+  margin:50px auto 50px;
 }
 
 
@@ -400,6 +412,22 @@ a{
     list-style: none;
   }
 
+  /* .footer{
+    position:fixed;
+    bottom:0;
+    right:0;
+    left:0;
+    width:100%;
+    background: #000;
+    height:50px;
+    line-height: 100px;
+  }
+
+  .footer p{
+    text-align: center;
+    color:#fff;
+    font-size: 15px;
+  } */
 @media (max-width: 500px) {
   .artilce-item{
     padding:30px 50px 50px 50px;
@@ -423,7 +451,7 @@ a{
   .mypagination{
     display: block;
     width:57%;
-    margin:50px auto;
+    margin:50px auto 50px;
   }
 }
 
