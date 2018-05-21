@@ -20,7 +20,7 @@
         <li v-for="(articleitem,index) in showText" :key="index" class="articledesc">  
             <el-card class="box-card">
               <div slot="header" class="clearfix">
-                <span style="fontSize:22px"> {{articleitem.title}}</span>
+                <span  class="mytitle-span"> {{articleitem.title}}</span>
                 <router-link :to="{name:'articledetail',params: {id: articleitem._id},query:{articleId: articleitem._id}}">
                   <el-button style="float: right; padding: 3px 0" type="text" >查看全文</el-button>
                 </router-link>
@@ -193,10 +193,21 @@ export default{
       // border:1px solid black;
       .articledesc{
         display: block;
+        .clearfix{
+          .mytitle-span{
+                    font-size: 22px;
+                  }
+        }
+       
       }
     }
     
   }
+ 
 }
-
+ @media (max-width:500px){
+   #tagArticleList .list-container .item-down .articledesc .clearfix .mytitle-span{
+     font-size: 18px;
+   }
+  }
 </style>

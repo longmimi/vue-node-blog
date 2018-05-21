@@ -250,7 +250,7 @@ mounted(){
                     // console.log(this.isdrawershow,'判断else')
                 }  
    window.onresize = function(){
-   
+       //chrome resize事件会触发两次
        var res;
         if (res){clearTimeout(res)}
         res = setTimeout(function(){
@@ -262,15 +262,10 @@ mounted(){
                 || navigator.userAgent.match(/BlackBerry/i)  
                 || navigator.userAgent.match(/Windows Phone/i)  
                 ){  
-
                    that.isdrawershow = true
-     
-                  //  console.log(this.isdrawershow,'判断2if')
                 }  
                 else {  
-     
-                    that.isdrawershow = false
-                    // console.log(this.isdrawershow,'判断2else')
+                   that.isdrawershow = false
                 }  
         },20);
         
@@ -529,6 +524,46 @@ a{
     display: block;
     width:57%;
     margin:50px auto 50px;
+  }
+  .post-icon{
+    width:20px;
+    height:20px;
+    margin-bottom:-5px;
+  }
+  .mask-wrapper .post-title {
+    font-size: 13px;
+    font-weight: 100!important;
+    line-height: 1;
+    color: #fff;
+    text-overflow: ellipsis;
+  }
+  .mask-wrapper .post-info {
+    font-size: 12px;
+    font-family: exoregular;
+  }
+  .post-btn{
+    position:absolute;
+    bottom:8%;
+    right:3%;
+    color:#fff;
+    width:80px;
+    height:25px;
+    background: rgba(0,0,0,0.2);
+    font-size: 15px;
+    padding:5px 5px 5px 10px;
+    border-radius: 8px;
+    line-height: 25px;
+    text-align: center;
+  }
+
+  .post-btn-word{
+    padding-left:5px;
+  }
+
+  .post-btn:hover{
+    color:#fff;
+    background: rgba(0,0,0,1);
+    font-size: 18px;
   }
 }
 
