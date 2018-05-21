@@ -69,7 +69,7 @@
     </div>
 
     <Ldrawer
-      :style="{display:isdrawershow}"
+      v-show="isdrawershow"
       circle
       theme="light"
       switchPosi="bl"
@@ -77,7 +77,7 @@
       @open-drawer="handleOpen"
       @close-drawer="handleClose">
       
-      <Larticletags class="Larticletags"></Larticletags>
+       <Larticletags class="Larticletags"></Larticletags>
        <Larticlecateory class="Larticlecategory"></Larticlecateory>
     </Ldrawer>
 
@@ -121,7 +121,7 @@ data () {
       isFixed: false,
       isFlow:true,
       totalItem: 0, //总博客个数
-      isdrawershow: 'none'
+      isdrawershow: true
   }
 },
 components:{
@@ -228,6 +228,7 @@ computed: {
   //  }
 },
 mounted(){
+  let that = this;
    this.getArticleList();   //获取文章列表
    window.addEventListener('scroll', this.handleScroll)
   //  window.addEventListener('scroll', this.handleScroll2)
@@ -239,15 +240,21 @@ mounted(){
                 || navigator.userAgent.match(/BlackBerry/i)  
                 || navigator.userAgent.match(/Windows Phone/i)  
                 ){  
-                   this.isdrawershow = 'block'
-                   console.log(this.isdrawershow,'判断')
+                   that.isdrawershow = true
+                  
+                  //  console.log(this.isdrawershow,'判断if')
                 }  
                 else {  
-                    this.isdrawershow = 'none' 
-                    console.log(this.isdrawershow,'判断')
+               
+                    that.isdrawershow = false
+                    // console.log(this.isdrawershow,'判断else')
                 }  
    window.onresize = function(){
-     if( navigator.userAgent.match(/Android/i)  
+   
+       var res;
+        if (res){clearTimeout(res)}
+        res = setTimeout(function(){
+          if( navigator.userAgent.match(/Android/i)  
                 || navigator.userAgent.match(/webOS/i)  
                 || navigator.userAgent.match(/iPhone/i)  
                 || navigator.userAgent.match(/iPad/i)  
@@ -255,13 +262,19 @@ mounted(){
                 || navigator.userAgent.match(/BlackBerry/i)  
                 || navigator.userAgent.match(/Windows Phone/i)  
                 ){  
-                   this.isdrawershow = 'block'
-                   console.log(this.isdrawershow,'判断2')
+
+                   that.isdrawershow = true
+     
+                  //  console.log(this.isdrawershow,'判断2if')
                 }  
                 else {  
-                    this.isdrawershow = 'none' 
-                    console.log(this.isdrawershow,'判断2')
+     
+                    that.isdrawershow = false
+                    // console.log(this.isdrawershow,'判断2else')
                 }  
+        },20);
+        
+     
    }
 },
 filters:{
@@ -270,6 +283,11 @@ filters:{
   },
    commentFilter(value){
      return value.length
+   }
+},
+watch:{
+  isdrawershow:function(v){
+    console.log(v,'vvvvvvvvvv')
    }
 },
 destroyed () {

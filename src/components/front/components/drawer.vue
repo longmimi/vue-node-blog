@@ -11,8 +11,8 @@
           @click="closeDrawer">
         </div>
       </div>
-      <div :class="isCircle">
-        <div
+      <div :class="isCircle"> 
+        <div    
           class="drawer-switch"
           :class="switchPosi"
           @click="openDrawer">
@@ -67,10 +67,14 @@ export default {
     circle: {
       type: Boolean,
       default: false
+    },
+    isdrawershow:{
+      type:Boolean,
+      default:false
     }
   },
   watch:{
-    
+   
   },
   methods:{
     openDrawer(){
