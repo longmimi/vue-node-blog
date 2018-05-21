@@ -41,7 +41,7 @@
           :haveIcon="true" 
           :boxWidth="100" 
           :maxNum="1"
-          :zipFactor="0.2"
+          :zipFactor="0.7"
           :photoSize="720"
           @upload-change="handleChange">
         </up-load-img>

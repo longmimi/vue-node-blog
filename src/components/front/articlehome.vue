@@ -68,6 +68,19 @@
       </div>  
     </div>
 
+    <Ldrawer
+      :style="{display:isdrawershow}"
+      circle
+      theme="light"
+      switchPosi="bl"
+      :drawerWidth="280"
+      @open-drawer="handleOpen"
+      @close-drawer="handleClose">
+      
+      <Larticletags class="Larticletags"></Larticletags>
+       <Larticlecateory class="Larticlecategory"></Larticlecateory>
+    </Ldrawer>
+
     <!-- <div :class="{footer:isFooterShow}">
       <p>designed by longtean</p>
     </div> -->
@@ -79,6 +92,7 @@
 <script>
 import Larticletags from './components/tags'
 import Larticlecateory from './components/category'
+import Ldrawer from './components/drawer'
 const hljs = require('highlight.js');
 import 'highlight.js/styles/googlecode.css' //样式文件
 const md = require('markdown-it')({
@@ -107,12 +121,16 @@ data () {
       isFixed: false,
       isFlow:true,
       totalItem: 0, //总博客个数
-      isFooterShow: false
+      isdrawershow: 'none'
   }
 },
 components:{
   Larticletags,
-  Larticlecateory
+  Larticlecateory,
+  Ldrawer
+},
+beforeCreate(){
+  
 },
 methods: {
    getArticleList(){
@@ -186,7 +204,14 @@ methods: {
                 clearInterval(scrollInterval); 
               }
             }, 1);
+   },
+   handleOpen(){
+     console.log('打开抽屉')
+   },
+   handleClose(){
+      console.log('关闭抽屉')
    }
+   
 },
 computed: {
    commentFilter(value){
@@ -206,6 +231,38 @@ mounted(){
    this.getArticleList();   //获取文章列表
    window.addEventListener('scroll', this.handleScroll)
   //  window.addEventListener('scroll', this.handleScroll2)
+  if( navigator.userAgent.match(/Android/i)  
+                || navigator.userAgent.match(/webOS/i)  
+                || navigator.userAgent.match(/iPhone/i)  
+                || navigator.userAgent.match(/iPad/i)  
+                || navigator.userAgent.match(/iPod/i)  
+                || navigator.userAgent.match(/BlackBerry/i)  
+                || navigator.userAgent.match(/Windows Phone/i)  
+                ){  
+                   this.isdrawershow = 'block'
+                   console.log(this.isdrawershow,'判断')
+                }  
+                else {  
+                    this.isdrawershow = 'none' 
+                    console.log(this.isdrawershow,'判断')
+                }  
+   window.onresize = function(){
+     if( navigator.userAgent.match(/Android/i)  
+                || navigator.userAgent.match(/webOS/i)  
+                || navigator.userAgent.match(/iPhone/i)  
+                || navigator.userAgent.match(/iPad/i)  
+                || navigator.userAgent.match(/iPod/i)  
+                || navigator.userAgent.match(/BlackBerry/i)  
+                || navigator.userAgent.match(/Windows Phone/i)  
+                ){  
+                   this.isdrawershow = 'block'
+                   console.log(this.isdrawershow,'判断2')
+                }  
+                else {  
+                    this.isdrawershow = 'none' 
+                    console.log(this.isdrawershow,'判断2')
+                }  
+   }
 },
 filters:{
   TagsFilter(value){
@@ -411,6 +468,8 @@ a{
   .pagination-list li {
     list-style: none;
   }
+
+
 
   /* .footer{
     position:fixed;
