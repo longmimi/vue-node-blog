@@ -137,9 +137,9 @@ methods: {
      let _self = this;
       this.$http.get('/api/getarticlehome')
       .then( res => {
-        console.log(res.data)
+        // console.log(res.data)
         if(res.data.status == 0){
-          console.log('res',res.data.articlehome);
+          // console.log('res',res.data.articlehome);
           this.articleObj = res.data.articlehome;
           this.totalItem = res.data.totalNumber;
         }
@@ -175,15 +175,15 @@ methods: {
      return _articleContent.length > 100 ? _articleContent.substr(0,80) + '......' : _articleContent;
    },
    handleCurrentChange(val){
-      console.log(val);
+      // console.log(val);
       this.$http.get('api/getpagination',{
         params:{
           pageNumber:val
         }
       })
       .then( res => {
-        console.log(res.data.status,'res.data.status')
-        console.log(res.data.pagination,'res.data.pagination')
+        // console.log(res.data.status,'res.data.status')
+        // console.log(res.data.pagination,'res.data.pagination')
         this.articleObj = res.data.pagination;
         this.scrollToTop(2000)
       })
@@ -206,10 +206,10 @@ methods: {
             }, 1);
    },
    handleOpen(){
-     console.log('打开抽屉')
+    //  console.log('打开抽屉')
    },
    handleClose(){
-      console.log('关闭抽屉')
+      // console.log('关闭抽屉')
    }
    
 },
@@ -282,7 +282,6 @@ filters:{
 },
 watch:{
   isdrawershow:function(v){
-    console.log(v,'vvvvvvvvvv')
    }
 },
 destroyed () {

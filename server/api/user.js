@@ -164,12 +164,64 @@ const backUserInfoAll = (req,res) => {
 
 }
 
+const upLoadImage = (req,res) => {
+  let dataObj = {
+    username:req.body.username,
+    imageArr:req.body.imgListArr
+  }
+  let length = dataObj.imageArr.length;
+  for (let i = 0; i < length; i++){
+    User.update(
+      { name: dataObj.username },
+      {
+        $push: {
+          userImageList: {
+            imageUrl: dataObj.imageArr[i]
+          }
+        }
+      }
+    ).exec((err, docs) => {
+      if (err) {
+        console.log(err, '插入==========')
+      } else {
+        console.log(docs,'循环中的push')
+      }
+    })
+  }
+  res.json({
+    status: 0,
+    msg: '成功'
+  })
+}
+
+const getImageArr = (req, res) => {
+  let dataObj = {
+    username: req.query.username
+  };
+  User.find(
+      { name: dataObj.username },
+      ['userImageList']
+    ).exec((err, docs) => {
+      if (err) {
+        console.log(err, '==========')
+      } else {
+        console.log(docs, '查询图片')
+        res.json({
+          status: 0,
+          msg: '成功',
+          imageArr:docs
+        })
+      } 
+    })
+} 
 
 
 
 router.post('/api/register',checkNotLogin,Register)
 router.post('/api/login',checkNotLogin,Login)
 router.get('/api/getuserall',backUserInfoAll)
+router.post('/api/uploadimage', upLoadImage)
+router.get('/api/getimageArr', getImageArr)
 
 module.exports = router
 

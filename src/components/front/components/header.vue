@@ -17,7 +17,7 @@
                 <div style="text-align: right; margin: 0">
                   <el-button size="mini" type="text" @click="visible2 = false">点错了</el-button>
                   <el-button type="primary" size="mini" @click="loginOut">注销</el-button>
-                  <el-button type="primary" size="mini" @click="goUserCenter" style="margin:10px auto">去个人中心</el-button>
+                  <el-button type="primary" size="mini" @click="goUserCenter" style="margin:10px auto">我的相册</el-button>
                 </div>
               </el-popover>
             </router-link></li>

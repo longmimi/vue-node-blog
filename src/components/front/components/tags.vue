@@ -45,7 +45,7 @@ export default {
          .then( res => {
            console.log('getarticletags',res);
            if(res.data.status == 0){
-              console.log('res',res.data.articletags);
+              // console.log('res',res.data.articletags);
               this.articleTagsArr = res.data.articletags;                    
               this.articletags = this.uniqeByKeys(this.tagsAddCount(this.arr2To1( this.articleTagsArr)),['tags'])
            }

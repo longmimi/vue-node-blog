@@ -35,7 +35,7 @@ export default {
       }
     },
     mounted(){
-      console.log('父组件来的',this.commentArrList)
+      // console.log('父组件来的',this.commentArrList)
     },
     computed: {
       //  newArr(){

@@ -111,7 +111,7 @@ export default {
                       type: 'success',
                       offset:130
               });
-              console.log('跳转到登录页')
+              // console.log('跳转到登录页')
               this.$router.push('/login')
             }
           })

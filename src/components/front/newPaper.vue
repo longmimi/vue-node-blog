@@ -180,10 +180,11 @@ export default {
           this.picUrl = sessionStorage.getItem('article_picUrl')
         }else if(sessionStorage.getItem('article_content_edit') && this.isEditArticle == 'yes'){
            //设置缓存
+           let reg = /[,]/;
           this.articleContent = sessionStorage.getItem('article_content_edit')
           this.articleTitle = sessionStorage.getItem('article_title_edit')
           this.inputCategory = sessionStorage.getItem('article_category_edit')
-          this.inputTags = sessionStorage.getItem('article_tags_edit')
+          this.inputTags = sessionStorage.getItem('article_tags_edit').replace(reg,'/')
           this.picUrl = sessionStorage.getItem('article_picUrl_edit')
         }
       }

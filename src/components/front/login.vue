@@ -94,7 +94,7 @@
             // 通过验证之后才请求登录接口
             this.$http.post('/api/login',formData)
                 .then(res => {
-                    console.dir(res.data+'登录返回数据')
+                    // console.dir(res.data+'登录返回数据')
                     if (res.data.success) {
                       if(res.data.isAdmin){
                           this.$notify({
@@ -156,7 +156,7 @@
       },
       // 表单重置
       resetForm(){
-        console.log('session')
+        // console.log('session')
         this.$refs['formLogin'].resetFields();
       }
     }

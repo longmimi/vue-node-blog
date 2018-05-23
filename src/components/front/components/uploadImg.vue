@@ -83,6 +83,10 @@ export default {
     photoSize: {
       type: Number,
       default: 720
+    },
+    isImageClear:{
+      type:Boolean,
+      default:false
     }
   },
   watch:{
@@ -90,6 +94,11 @@ export default {
       this.$emit('upload-change', val);
       if(val.length>=this.maxNum){
         this.$emit('upload-full',val);
+      }
+    },
+    isImageClear(val){
+      if(val === true){
+        this.imageListUrl = []
       }
     }
   },
@@ -100,7 +109,7 @@ export default {
         var that = this;
         this.ImgToBase64(file, this.photoSize, function (base64) {
           that.imageListUrl.push(base64);
-        })
+        });
       }
     },
     closePreItem(index){

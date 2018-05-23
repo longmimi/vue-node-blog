@@ -78,7 +78,7 @@ export default{
   methods:{
     getTagArtcileList(tagname){
       let _self = this;
-      console.log('tagname',tagname)
+      // console.log('tagname',tagname)
       this.$http.get('api/getarticlelistbytagname',{
         params:{
           tagName:tagname
@@ -86,14 +86,14 @@ export default{
       })
       .then( res => {
         if(res.data.status  == 0){
-          console.log('getarticlelistbytagname的返回数据',res.data.articletagslistbytagname)
+          // console.log('getarticlelistbytagname的返回数据',res.data.articletagslistbytagname)
           _self.showText = res.data.articletagslistbytagname
         }
       })
     },
     getCateArtcileList(catename){
       let _self = this;
-      console.log('catename',catename)
+      // console.log('catename',catename)
       this.$http.get('api/getarticlelistbycategoryname',{
         params:{
           cateName:catename
@@ -101,7 +101,7 @@ export default{
       })
       .then( res => {
         if(res.data.status  == 0){
-          console.log('getarticlelistbytagname的返回数据',res.data.articletagslistbycatename)
+          // console.log('getarticlelistbytagname的返回数据',res.data.articletagslistbycatename)
           _self.showText = res.data.articletagslistbycatename
         }else{
           console.log('出错了')
@@ -109,7 +109,7 @@ export default{
       })
     },
     handlecollapse(val){
-      console.log(val,'val')
+      // console.log(val,'val')
     },
     //页面刚进入  或者监听路由变化 执行的方法
     handleInitArticleList(){

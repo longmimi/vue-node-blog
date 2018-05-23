@@ -14,7 +14,16 @@ const userSchema = mongoose.Schema({
   lastlogintime:{
     type:Date,
     default: Date.now()
-  }
+  },
+  userImageList:[
+    {
+      imageUrl:String,
+      uploadTime:{
+        type:Date,
+        default:Date.now()
+      }
+    }
+  ]
 })
 
 const User = module.exports = mongoose.model('UserSession',userSchema)

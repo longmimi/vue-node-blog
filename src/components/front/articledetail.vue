@@ -144,7 +144,7 @@ export default{
     },
     deletearticle(){
       if(confirm('您确认要删除文章吗？')){
-          console.log('删除文章');
+          // console.log('删除文章');
           this.$http.get('/api/deleteArticle',{
             params:{
               articleId:this.articleId
@@ -152,7 +152,7 @@ export default{
           })
           .then( res => {
             if(res.data.status == 0){
-              console.log('删除返回的数据',res)
+              // console.log('删除返回的数据',res)
               this.$notify({
                   title: '删除成功',
                   message: `${res.data.msg}`,

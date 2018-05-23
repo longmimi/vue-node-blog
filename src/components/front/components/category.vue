@@ -43,9 +43,9 @@ export default {
          let _self = this;
          this.$http.get('api/getarticlecategory')
          .then( res => {
-           console.log('getarticlecategory',res);
+          //  console.log('getarticlecategory',res);
            if(res.data.status == 0){
-              console.log('res',res.data.articlecategory);
+              // console.log('res',res.data.articlecategory);
               this.articlecategory = res.data.articlecategory;
               this.newCategoryArr = this.uniqeByKeys(this.categoryAddCount(this.articlecategory),['category']) 
            }
@@ -61,7 +61,7 @@ export default {
         this.$http.get('api/getarticlecategorylist',{params:{key:category}})
         .then(res => {
           if(res.data.status == 0){
-             console.log('getarticlecategorylist',res.data.articlecategorylist[0].category)
+            //  console.log('getarticlecategorylist',res.data.articlecategorylist[0].category)
              this.$router.push({ name:'tagarticlelist',
                               query:{
                                  cateArticleId:res.data.articlecategorylist[0]._id,

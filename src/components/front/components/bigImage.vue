@@ -56,7 +56,7 @@ export default {
       this.$http.get('api/getpusharticle')
       .then( res => {
         if(res.data.status == 0){
-          console.log(res.data.pusharticle,'推荐文章');
+          // console.log(res.data.pusharticle,'推荐文章');
           let pusharticleArr = res.data.pusharticle;
           pusharticleArr.forEach( (item,index) => {
               let pusharticleObj = {};
