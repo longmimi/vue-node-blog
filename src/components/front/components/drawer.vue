@@ -132,7 +132,7 @@ export default {
   transition: all 0.3s;
   -webkit-transition: all 0.3s;
   box-shadow: 0 0 24px #999;
-  padding: 12px;
+  padding: 40px 12px;
   word-wrap: break-word;
   word-break: normal;
   overflow-x: hidden;
