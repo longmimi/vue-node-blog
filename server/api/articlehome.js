@@ -3,7 +3,7 @@ const ArticleSCM = require('../models/schema/article');
 const router = express.Router();
 
 const ArticleHome = (req, res) => {
-    console.log('req',req);
+    // console.log('req',req);
     let articleList = {};
     ArticleSCM.find({}).sort({'creatTime':-1})
     .limit(5)

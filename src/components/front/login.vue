@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import md5 from 'js-md5';
   export default {
     data(){
       let checkUserName = (rule,value,cb)=>{
@@ -79,13 +80,15 @@
         }
       }
     },
+    mounted(){
+    },
     methods:{
       // 向登录接口发起请求
       login(){
         let user = this.formLogin;
         let formData = {
           name: user.name,
-          password: user.password,
+          password: md5(md5(md5(user.password))),
           lastlogintime: new Date()
         };
         // 表单验证

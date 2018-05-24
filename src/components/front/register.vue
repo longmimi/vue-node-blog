@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import md5 from 'js-md5';
 export default {
    data(){
      let checkUserName = (rule,value,cb)=>{
@@ -82,7 +83,7 @@ export default {
       //发送的数据
       let formData = {
         name:user.name,
-        password:user.password,
+        password:md5(md5(md5(user.password))),
         registertime:new Date()
       }
       //表单验证
